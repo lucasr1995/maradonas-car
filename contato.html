@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contato – Maradona's Car | Multimarcas em BH</title>
+<meta name="description" content="Entre em contato com a Maradona's Car. Estamos em Belo Horizonte, MG. WhatsApp, telefone e e-mail disponíveis.">
+<meta property="og:title" content="Contato – Maradona's Car | Multimarcas em BH">
+<meta property="og:description" content="Entre em contato com a Maradona's Car. Estamos em Belo Horizonte, MG. WhatsApp, telefone e e-mail disponíveis.">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#D0401A;--red2:#e8521f;--bg:#0f0f0f;--bg2:#161616;--bg3:#1f1f1f;--silver:#a0a0a0;--white:#fff;--border:rgba(255,255,255,0.08)}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;z-index:200;background:rgba(15,15,15,0.97);border-bottom:1px solid rgba(208,64,26,0.3);backdrop-filter:blur(12px)}
+.nav-inner{max-width:1300px;margin:0 auto;padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:46px;object-fit:contain}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--red2)}
+.nav-cta{background:var(--red);color:var(--white);padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-block}
+.nav-cta:hover{background:var(--red2)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white)}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--bg2);z-index:199;padding:2rem;border-bottom:1px solid var(--border)}
+.mobile-menu.open{display:flex;flex-direction:column;gap:1.5rem}
+.mobile-menu a{font-size:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--silver);text-decoration:none}
+.page-header{padding:130px 2rem 4rem;background:var(--bg2);border-bottom:1px solid var(--border)}
+.page-header-inner{max-width:1300px;margin:0 auto}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red2);margin-bottom:1rem}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--red2)}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(42px,7vw,80px);font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-1px}
+.section{padding:5rem 2rem}
+.section-inner{max-width:1300px;margin:0 auto}
+.contato-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.info-cards{display:flex;flex-direction:column;gap:1.5px}
+.info-card{background:var(--bg3);padding:1.75rem;display:flex;align-items:flex-start;gap:1.25rem}
+.info-icon{width:48px;height:48px;background:rgba(208,64,26,.15);border:1px solid rgba(208,64,26,.3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.info-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red2);margin-bottom:5px}
+.info-val{font-size:15px;color:var(--silver);line-height:1.6}
+.info-val a{color:var(--silver);text-decoration:none}
+.info-val a:hover{color:var(--white)}
+.wpp-btn{display:block;background:#25D366;color:var(--white);text-align:center;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;margin-top:1.5rem;transition:background .2s}
+.wpp-btn:hover{background:#1ebe5a}
+.map-area{margin-top:1.5rem;background:var(--bg3);border:1px solid var(--border);height:260px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--silver);font-size:14px;cursor:pointer;transition:background .2s}
+.map-area:hover{background:var(--bg2)}
+.form-box{background:var(--bg3);padding:2.5rem;border:1px solid var(--border)}
+.form-box h3{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;text-transform:uppercase;margin-bottom:1.5rem;letter-spacing:1px}
+.form-row{margin-bottom:1.25rem}
+.form-row label{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);margin-bottom:8px}
+.form-row input,.form-row select,.form-row textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--white);padding:12px 16px;font-size:14px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .2s;resize:vertical;-webkit-appearance:none}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--red2)}
+.form-row select option{background:var(--bg3);color:var(--white)}
+.form-row input::placeholder,.form-row textarea::placeholder{color:rgba(160,160,160,.5)}
+.btn-submit{width:100%;background:var(--red);color:var(--white);border:none;padding:15px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background .2s;margin-top:.5rem}
+.btn-submit:hover{background:var(--red2)}
+.horario-box{background:var(--red);padding:2rem;margin-top:3rem}
+.horario-box h4{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:1rem;letter-spacing:1px}
+.horario-line{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.15);font-size:14px}
+.horario-line:last-child{border:none}
+.horario-line .dias{color:rgba(255,255,255,.85)}
+.horario-line .horas{font-weight:700}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg3);border:1px solid rgba(208,64,26,.4);border-left:4px solid var(--red);padding:1rem 1.5rem;z-index:999;transform:translateY(100px);opacity:0;transition:all .3s;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast p{font-size:14px;font-weight:500}
+footer{background:#0a0a0a;padding:3rem 2rem;border-top:1px solid rgba(208,64,26,.25)}
+.foot-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.foot-logo img{height:40px;object-fit:contain}
+.foot-links{display:flex;gap:2rem;flex-wrap:wrap}
+.foot-links a{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--red2)}
+.foot-bottom{max-width:1300px;margin:1.5rem auto 0;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:rgba(160,160,160,.5);flex-wrap:wrap;gap:.5rem}
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .contato-layout{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Maradona's Car"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="estoque.html">Estoque</a></li>
+      <li><a href="financiamento.html">Financiamento</a></li>
+      <li><a href="contato.html" class="active">Contato</a></li>
+    </ul>
+    <a href="contato.html" class="nav-cta">Fale Conosco</a>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+  <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+</div>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="eyebrow">Contato</div>
+    <h1>Fale com a<br>Maradona's Car</h1>
+  </div>
+</div>
+<section class="section">
+  <div class="section-inner">
+    <div class="contato-layout">
+      <div>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="info-icon">📍</div>
+            <div><div class="info-label">Endereço</div><div class="info-val">Av. Contorno, 4521 – Funcionários<br>Belo Horizonte – MG, 30110-090</div></div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📞</div>
+            <div><div class="info-label">Telefone</div><div class="info-val"><a href="tel:+553133334444">(31) 3333-4444</a></div></div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">💬</div>
+            <div><div class="info-label">WhatsApp</div><div class="info-val"><a href="https://wa.me/5531999995555">(31) 9 9999-5555</a></div></div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📧</div>
+            <div><div class="info-label">E-mail</div><div class="info-val"><a href="mailto:contato@maradonascar.com.br">contato@maradonascar.com.br</a></div></div>
+          </div>
+        </div>
+        <a class="wpp-btn" href="https://wa.me/5531999995555?text=Olá! Vim pelo site e gostaria de mais informações." target="_blank">💬 Chamar no WhatsApp</a>
+        <div class="map-area" onclick="window.open('https://maps.google.com?q=Av.+Contorno+4521+Belo+Horizonte')">
+          <div style="font-size:48px">🗺️</div>
+          <div>Clique para ver no Google Maps</div>
+          <div style="font-size:12px;color:var(--silver)">Av. Contorno, 4521 – BH/MG</div>
+        </div>
+        <div class="horario-box">
+          <h4>🕐 Horário de Funcionamento</h4>
+          <div class="horario-line"><span class="dias">Segunda a Sexta</span><span class="horas">08h às 18h</span></div>
+          <div class="horario-line"><span class="dias">Sábado</span><span class="horas">08h às 14h</span></div>
+          <div class="horario-line"><span class="dias">Domingo</span><span class="horas">Fechado</span></div>
+        </div>
+      </div>
+      <div class="form-box">
+        <h3>Envie uma<br>Mensagem</h3>
+        <div class="form-row"><label>Nome Completo</label><input type="text" id="fNome" placeholder="Seu nome"></div>
+        <div class="form-row"><label>WhatsApp / Telefone</label><input type="text" id="fTel" placeholder="(31) 9 0000-0000"></div>
+        <div class="form-row"><label>E-mail</label><input type="email" id="fEmail" placeholder="seu@email.com"></div>
+        <div class="form-row">
+          <label>Assunto</label>
+          <select id="fAssunto">
+            <option value="">Selecione...</option>
+            <option>Interesse em veículo do estoque</option>
+            <option>Financiamento</option>
+            <option>Avaliação do meu veículo</option>
+            <option>Consignação</option>
+            <option>Outro assunto</option>
+          </select>
+        </div>
+        <div class="form-row"><label>Mensagem</label><textarea id="fMsg" rows="5" placeholder="Como podemos te ajudar?"></textarea></div>
+        <button class="btn-submit" onclick="enviar()">Enviar Mensagem</button>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="foot-inner">
+    <div class="foot-logo"><img src="logo.jpg" alt="Maradona's Car"></div>
+    <div class="foot-links">
+      <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+      <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2025 Maradona's Car. Todos os direitos reservados.</span>
+    <span>CNPJ: 00.000.000/0001-00 · DETRAN-MG 00000</span>
+  </div>
+</footer>
+<div class="toast" id="toast"><p id="toastMsg"></p></div>
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+function showToast(msg){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000)}
+function enviar(){
+  const nome=document.getElementById('fNome').value.trim();
+  const tel=document.getElementById('fTel').value.trim();
+  const assunto=document.getElementById('fAssunto').value;
+  const msg=document.getElementById('fMsg').value.trim();
+  if(!nome||!tel||!assunto){showToast('Preencha nome, WhatsApp e assunto.');return}
+  const text=`Olá! Meu nome é ${nome}.\nAssunto: ${assunto}\n${msg}\nContato: ${tel}`;
+  window.open(`https://wa.me/5531999995555?text=${encodeURIComponent(text)}`,'_blank');
+  showToast('Mensagem enviada via WhatsApp!');
+}
+</script>
+</body>
+</html>

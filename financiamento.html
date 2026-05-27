@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financiamento de Veículos – Maradona's Car</title>
+<meta name="description" content="Simule o financiamento do seu próximo carro na Maradona's Car. Aprovação em até 24h, parcelas que cabem no bolso.">
+<meta property="og:title" content="Financiamento de Veículos – Maradona's Car">
+<meta property="og:description" content="Simule o financiamento do seu próximo carro na Maradona's Car. Aprovação em até 24h, parcelas que cabem no bolso.">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#D0401A;--red2:#e8521f;--red-dark:#a32e10;--bg:#0f0f0f;--bg2:#161616;--bg3:#1f1f1f;--silver:#a0a0a0;--silver-light:#d0d0d0;--white:#fff;--border:rgba(255,255,255,0.08)}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;z-index:200;background:rgba(15,15,15,0.97);border-bottom:1px solid rgba(208,64,26,0.3);backdrop-filter:blur(12px)}
+.nav-inner{max-width:1300px;margin:0 auto;padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:46px;object-fit:contain}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--red2)}
+.nav-cta{background:var(--red);color:var(--white);padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-block}
+.nav-cta:hover{background:var(--red2)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white)}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--bg2);z-index:199;padding:2rem;border-bottom:1px solid var(--border)}
+.mobile-menu.open{display:flex;flex-direction:column;gap:1.5rem}
+.mobile-menu a{font-size:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--silver);text-decoration:none}
+
+.page-header{padding:130px 2rem 4rem;background:var(--bg2);border-bottom:1px solid var(--border)}
+.page-header-inner{max-width:1300px;margin:0 auto}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red2);margin-bottom:1rem}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--red2)}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(42px,7vw,80px);font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-1px}
+h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(30px,5vw,52px);font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-0.5px}
+
+.section{padding:5rem 2rem}
+.section-inner{max-width:1300px;margin:0 auto}
+
+/* SIMULADOR */
+.sim-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3rem}
+.sim-info{}
+.sim-info p{font-size:16px;font-weight:300;color:var(--silver);line-height:1.8;margin-bottom:2rem}
+.sim-items{display:flex;flex-direction:column;gap:.75rem;margin-bottom:2.5rem}
+.sim-item{display:flex;align-items:center;gap:12px;font-size:15px;color:var(--silver)}
+.sim-dot{width:8px;height:8px;background:var(--red);border-radius:50%;flex-shrink:0}
+.bancos{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.banco-tag{background:var(--bg3);border:1px solid var(--border);padding:6px 14px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--silver)}
+
+.sim-form{background:var(--bg3);padding:2.5rem;border:1px solid var(--border)}
+.sim-form h3{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;text-transform:uppercase;margin-bottom:1.5rem;letter-spacing:1px}
+.form-row{margin-bottom:1.25rem}
+.form-row label{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);margin-bottom:8px}
+.form-row input,.form-row select,.form-row textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--white);padding:12px 16px;font-size:14px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .2s;resize:vertical;-webkit-appearance:none}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--red2)}
+.form-row select option{background:var(--bg3);color:var(--white)}
+.form-row input::placeholder,.form-row textarea::placeholder{color:rgba(160,160,160,.5)}
+.btn-submit{width:100%;background:var(--red);color:var(--white);border:none;padding:15px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background .2s;margin-top:.5rem}
+.btn-submit:hover{background:var(--red2)}
+
+/* RESULTADO SIMULAÇÃO */
+.sim-resultado{display:none;background:var(--bg);border:1px solid rgba(208,64,26,.3);padding:1.5rem;margin-top:1.5rem}
+.sim-resultado.show{display:block}
+.res-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red2);margin-bottom:1rem}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.res-item .label{font-size:11px;color:var(--silver)}
+.res-item .value{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;margin-top:2px}
+
+/* BANCOS GRID */
+.etapas-section{background:var(--bg2)}
+.etapas-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;margin-top:3rem}
+.etapa-card{background:var(--bg3);padding:2rem;text-align:center}
+.etapa-num{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:rgba(208,64,26,.3);line-height:1;margin-bottom:.5rem}
+.etapa-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:.5rem}
+.etapa-text{font-size:13px;font-weight:300;color:var(--silver);line-height:1.7}
+
+footer{background:#0a0a0a;padding:3rem 2rem;border-top:1px solid rgba(208,64,26,.25);margin-top:0}
+.foot-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.foot-logo img{height:40px;object-fit:contain}
+.foot-links{display:flex;gap:2rem;flex-wrap:wrap}
+.foot-links a{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--red2)}
+.foot-bottom{max-width:1300px;margin:1.5rem auto 0;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:rgba(160,160,160,.5);flex-wrap:wrap;gap:.5rem}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg3);border:1px solid rgba(208,64,26,.4);border-left:4px solid var(--red);padding:1rem 1.5rem;z-index:999;transform:translateY(100px);opacity:0;transition:all .3s;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast p{font-size:14px;font-weight:500}
+
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .sim-layout{grid-template-columns:1fr}
+  .etapas-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .etapas-grid{grid-template-columns:1fr}
+  .res-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Maradona's Car"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="estoque.html">Estoque</a></li>
+      <li><a href="financiamento.html" class="active">Financiamento</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+    <a href="contato.html" class="nav-cta">Fale Conosco</a>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+  <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="eyebrow">Financiamento</div>
+    <h1>Aprovação<br>em 24 Horas</h1>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="sim-layout">
+      <div class="sim-info">
+        <div class="eyebrow">Como Funciona</div>
+        <h2 style="margin-bottom:1.25rem">Realize seu sonho<br>com parcelas que<br>cabem no bolso</h2>
+        <p>Trabalhamos com os maiores bancos e financeiras do Brasil para garantir as melhores condições para você. Mesmo negativado, temos opções!</p>
+        <div class="sim-items">
+          <div class="sim-item"><div class="sim-dot"></div>Até 60x com ou sem entrada</div>
+          <div class="sim-item"><div class="sim-dot"></div>Taxas a partir de 0,99% ao mês</div>
+          <div class="sim-item"><div class="sim-dot"></div>Análise especial para negativados</div>
+          <div class="sim-item"><div class="sim-dot"></div>Resposta em até 24 horas</div>
+          <div class="sim-item"><div class="sim-dot"></div>Use seu carro como entrada</div>
+          <div class="sim-item"><div class="sim-dot"></div>Documentação 100% digital</div>
+        </div>
+        <p style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:.75rem">Parceiros bancários:</p>
+        <div class="bancos">
+          <div class="banco-tag">Banco do Brasil</div><div class="banco-tag">Itaú</div>
+          <div class="banco-tag">Bradesco</div><div class="banco-tag">Santander</div>
+          <div class="banco-tag">Caixa</div><div class="banco-tag">BV Financeira</div>
+        </div>
+      </div>
+
+      <div class="sim-form">
+        <h3>Simule Agora<br>é Grátis</h3>
+        <div class="form-row">
+          <label>Nome Completo</label>
+          <input type="text" id="sNome" placeholder="Seu nome completo">
+        </div>
+        <div class="form-row">
+          <label>WhatsApp</label>
+          <input type="text" id="sTel" placeholder="(31) 9 0000-0000">
+        </div>
+        <div class="form-row">
+          <label>Valor do Veículo</label>
+          <select id="sValor">
+            <option value="">Selecione...</option>
+            <option value="40000">Até R$ 40.000</option>
+            <option value="60000">R$ 40k – R$ 60k</option>
+            <option value="90000">R$ 60k – R$ 90k</option>
+            <option value="120000">R$ 90k – R$ 120k</option>
+            <option value="180000">Acima de R$ 120k</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Entrada</label>
+          <select id="sEntrada">
+            <option value="0">Sem entrada</option>
+            <option value="0.1">10%</option>
+            <option value="0.2">20%</option>
+            <option value="0.3">30%</option>
+            <option value="0.5">50% ou mais</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Prazo (meses)</label>
+          <select id="sPrazo">
+            <option value="12">12x</option><option value="24">24x</option>
+            <option value="36">36x</option><option value="48">48x</option>
+            <option value="60" selected>60x</option>
+          </select>
+        </div>
+
+        <div class="sim-resultado" id="simRes">
+          <div class="res-title">Estimativa de Parcela</div>
+          <div class="res-grid">
+            <div class="res-item"><div class="label">Valor financiado</div><div class="value" id="rFinanciado"></div></div>
+            <div class="res-item"><div class="label">Parcela estimada</div><div class="value" id="rParcela" style="color:var(--red2)"></div></div>
+            <div class="res-item"><div class="label">Prazo</div><div class="value" id="rPrazo"></div></div>
+            <div class="res-item"><div class="label">Taxa (a.m.)</div><div class="value">1,49%</div></div>
+          </div>
+          <p style="font-size:11px;color:var(--silver);margin-top:1rem">*Simulação estimada. Condições sujeitas à análise de crédito.</p>
+        </div>
+
+        <button class="btn-submit" onclick="simular()">Simular e Enviar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section etapas-section">
+  <div class="section-inner">
+    <div class="eyebrow">Processo</div>
+    <h2>Como é fácil<br>financiar na Maradona's</h2>
+    <div class="etapas-grid">
+      <div class="etapa-card">
+        <div class="etapa-num">01</div>
+        <div class="etapa-title">Escolha o Carro</div>
+        <p class="etapa-text">Visite nosso estoque físico ou online e encontre o veículo ideal para você e sua família.</p>
+      </div>
+      <div class="etapa-card">
+        <div class="etapa-num">02</div>
+        <div class="etapa-title">Simule</div>
+        <p class="etapa-text">Nossa equipe simula gratuitamente nas melhores condições disponíveis em todos os bancos parceiros.</p>
+      </div>
+      <div class="etapa-card">
+        <div class="etapa-num">03</div>
+        <div class="etapa-title">Aprovação</div>
+        <p class="etapa-text">Em até 24h úteis recebemos a resposta dos bancos. Trabalhamos para garantir sua aprovação.</p>
+      </div>
+      <div class="etapa-card">
+        <div class="etapa-num">04</div>
+        <div class="etapa-title">Pegue as Chaves</div>
+        <p class="etapa-text">Assine os documentos e saia de carro novo no mesmo dia. É simples assim!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-logo"><img src="logo.jpg" alt="Maradona's Car"></div>
+    <div class="foot-links">
+      <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+      <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2025 Maradona's Car. Todos os direitos reservados.</span>
+    <span>CNPJ: 00.000.000/0001-00 · DETRAN-MG 00000</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><p id="toastMsg"></p></div>
+
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+function showToast(msg){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4000)}
+
+function simular(){
+  const nome=document.getElementById('sNome').value.trim();
+  const tel=document.getElementById('sTel').value.trim();
+  const valorStr=document.getElementById('sValor').value;
+  if(!nome||!tel||!valorStr){showToast('Preencha nome, WhatsApp e valor do veículo.');return}
+  const valor=Number(valorStr);
+  const entrada=Number(document.getElementById('sEntrada').value);
+  const prazo=Number(document.getElementById('sPrazo').value);
+  const financiado=valor*(1-entrada);
+  const taxa=0.0149;
+  const parcela=financiado*(taxa*Math.pow(1+taxa,prazo))/(Math.pow(1+taxa,prazo)-1);
+  document.getElementById('rFinanciado').textContent='R$ '+Math.round(financiado).toLocaleString('pt-BR');
+  document.getElementById('rParcela').textContent='R$ '+Math.round(parcela).toLocaleString('pt-BR');
+  document.getElementById('rPrazo').textContent=prazo+'x';
+  document.getElementById('simRes').classList.add('show');
+  const msg=`Olá! Meu nome é ${nome}, tenho interesse em financiamento.\nValor: R$ ${valor.toLocaleString('pt-BR')}\nEntrada: ${(entrada*100)}%\nPrazo: ${prazo}x\nParcela estimada: R$ ${Math.round(parcela).toLocaleString('pt-BR')}\nMeu WhatsApp: ${tel}`;
+  setTimeout(()=>{window.open(`https://wa.me/5531999995555?text=${encodeURIComponent(msg)}`)},1500);
+  showToast('Simulação gerada! Abrindo WhatsApp...');
+}
+</script>
+</body>
+</html>

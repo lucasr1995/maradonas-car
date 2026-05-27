@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estoque de Veículos – Maradona's Car | Multimarcas em BH</title>
+<meta name="description" content="Veja o estoque completo da Maradona's Car. Veículos multimarcas em Belo Horizonte com financiamento em até 24h.">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#D0401A;--red2:#e8521f;--bg:#0f0f0f;--bg2:#161616;--bg3:#1f1f1f;--bg4:#252525;--silver:#a0a0a0;--white:#fff;--border:rgba(255,255,255,0.08)}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
+body.light{--bg:#f5f5f0;--bg2:#eaeae5;--bg3:#e0e0db;--bg4:#d5d5d0;--silver:#555;--white:#111;--border:rgba(0,0,0,0.1)}
+nav{position:fixed;top:0;width:100%;z-index:200;background:rgba(15,15,15,0.97);border-bottom:1px solid rgba(208,64,26,0.3);backdrop-filter:blur(12px)}
+body.light nav{background:rgba(245,245,240,0.97)}
+.nav-inner{max-width:1300px;margin:0 auto;padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:46px;object-fit:contain}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--red2)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.theme-btn{background:none;border:1px solid var(--border);color:var(--silver);padding:8px 10px;cursor:pointer;font-size:16px;line-height:1}
+.nav-cta{background:var(--red);color:#fff;padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block}
+.nav-cta:hover{background:var(--red2)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white)}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--bg2);z-index:199;padding:2rem;border-bottom:1px solid var(--border)}
+.mobile-menu.open{display:flex;flex-direction:column;gap:1.5rem}
+.mobile-menu a{font-size:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--silver);text-decoration:none}
+.page-header{padding:130px 2rem 4rem;background:var(--bg2);border-bottom:1px solid var(--border)}
+.page-header-inner{max-width:1300px;margin:0 auto}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red2);margin-bottom:1rem}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--red2)}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(42px,7vw,80px);font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-1px}
+.filtros-bar{background:var(--bg3);border-bottom:1px solid var(--border);padding:1.25rem 2rem;position:sticky;top:70px;z-index:100}
+.filtros-inner{max-width:1300px;margin:0 auto;display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.filtro-input{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--white);padding:10px 16px;font-size:14px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .2s;min-width:160px;-webkit-appearance:none}
+.filtro-input:focus{border-color:var(--red2)}
+.filtro-input option{background:var(--bg3)}
+.filtro-search{flex:1;min-width:200px}
+.btn-fil{background:var(--red);color:#fff;border:none;padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.btn-fil:hover{background:var(--red2)}
+.btn-limpar{background:transparent;color:var(--silver);border:1px solid var(--border);padding:10px 20px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.btn-limpar:hover{border-color:var(--white);color:var(--white)}
+.resultado-count{font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--silver);margin-left:auto}
+.estoque-body{max-width:1300px;margin:0 auto;padding:3rem 2rem}
+.cars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px}
+.car-card{background:var(--bg3);overflow:hidden;cursor:pointer;transition:transform .25s;position:relative}
+.car-card:hover{transform:translateY(-6px)}
+.car-card:hover .card-img img{transform:scale(1.04)}
+.card-badge{position:absolute;top:14px;left:14px;z-index:2;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fff}
+.badge-destaque{background:var(--red)}
+.badge-vendido{background:#374151}
+.badge-reservado{background:#d97706}
+.foto-count{position:absolute;top:14px;right:14px;z-index:2;background:rgba(0,0,0,.6);color:#fff;padding:3px 8px;font-size:10px;font-weight:700}
+.compare-chk{position:absolute;bottom:14px;right:14px;z-index:3;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 10px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.compare-chk.selected{background:var(--red);border-color:var(--red)}
+.card-img{width:100%;height:210px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.card-overlay{position:absolute;inset:0;background:rgba(208,64,26,.1);opacity:0;transition:opacity .2s}
+.car-card:hover .card-overlay{opacity:1}
+.card-body{padding:1.25rem}
+.card-brand{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red2);margin-bottom:4px}
+.card-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:.75rem}
+.card-specs{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem}
+.spec{font-size:12px;color:var(--silver)}
+.card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border)}
+.price{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900}
+.price small{font-size:14px;font-weight:400;color:var(--silver)}
+.views-count{font-size:11px;color:var(--silver)}
+.btn-zap{background:var(--red);color:#fff;padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block}
+.btn-zap:hover{background:var(--red2)}
+.btn-ver{background:rgba(255,255,255,.07);color:var(--white);padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--border);cursor:pointer;text-decoration:none;display:inline-block}
+.empty-state{text-align:center;padding:5rem;color:var(--silver);grid-column:1/-1}
+.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;height:340px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+/* COMPARADOR */
+.compare-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid rgba(208,64,26,.4);padding:1rem 2rem;z-index:150;transform:translateY(100%);transition:transform .3s;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.compare-bar.visible{transform:translateY(0)}
+.compare-slots{display:flex;gap:.75rem;flex:1;flex-wrap:wrap}
+.compare-slot{background:var(--bg3);border:1px solid var(--border);padding:.5rem 1rem;font-size:13px;font-weight:600;display:flex;align-items:center;gap:.5rem}
+.compare-slot button{background:none;border:none;color:var(--red2);cursor:pointer;font-size:16px;line-height:1}
+.btn-compare-go{background:var(--red);color:#fff;border:none;padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.btn-compare-clear{background:transparent;color:var(--silver);border:1px solid var(--border);padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;cursor:pointer}
+/* MODAL COMPARADOR */
+.modal-compare{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;display:none;overflow-y:auto;padding:2rem}
+.modal-compare.open{display:block}
+.compare-inner{max-width:1100px;margin:0 auto;background:var(--bg2);padding:2rem;position:relative}
+.compare-close{position:absolute;top:1rem;right:1rem;background:var(--red);color:#fff;border:none;width:36px;height:36px;font-size:18px;cursor:pointer}
+.compare-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+.compare-table th{background:var(--bg3);padding:1rem;text-align:left;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver)}
+.compare-table td{padding:1rem;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
+.compare-table .label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--silver);width:140px}
+.compare-foto{width:100%;height:150px;object-fit:cover;margin-bottom:.75rem}
+footer{background:#0a0a0a;padding:3rem 2rem;border-top:1px solid rgba(208,64,26,.25);margin-top:4rem}
+.foot-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.foot-logo img{height:40px;object-fit:contain}
+.foot-links{display:flex;gap:2rem;flex-wrap:wrap}
+.foot-links a{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--red2)}
+.foot-bottom{max-width:1300px;margin:1.5rem auto 0;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:rgba(160,160,160,.5);flex-wrap:wrap;gap:.5rem}
+@media(max-width:900px){.nav-links,.nav-cta{display:none}.hamburger{display:flex}.filtros-inner{flex-direction:column;align-items:stretch}.resultado-count{margin-left:0}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Maradona's Car"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="estoque.html" class="active">Estoque</a></li>
+      <li><a href="financiamento.html">Financiamento</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+      <a href="contato.html" class="nav-cta">Fale Conosco</a>
+      <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+  <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+</div>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="eyebrow">Estoque</div>
+    <h1>Encontre seu<br>Veículo Ideal</h1>
+  </div>
+</div>
+<div class="filtros-bar">
+  <div class="filtros-inner">
+    <input class="filtro-input filtro-search" type="text" id="busca" placeholder="🔍  Buscar por marca, modelo...">
+    <select class="filtro-input" id="filMarca"><option value="">Todas as Marcas</option></select>
+    <select class="filtro-input" id="filTipo"><option value="">Todos os Tipos</option><option>Hatch</option><option>Sedã</option><option>SUV</option><option>Pickup</option><option>Van</option><option>Esportivo</option></select>
+    <select class="filtro-input" id="filPreco">
+      <option value="">Qualquer Preço</option>
+      <option value="0-50000">Até R$ 50k</option>
+      <option value="50000-80000">R$ 50k–80k</option>
+      <option value="80000-120000">R$ 80k–120k</option>
+      <option value="120000-999999">Acima R$ 120k</option>
+    </select>
+    <select class="filtro-input" id="filStatus">
+      <option value="">Todos</option>
+      <option value="disponivel">Disponíveis</option>
+      <option value="reservado">Reservados</option>
+      <option value="vendido">Vendidos</option>
+    </select>
+    <button class="btn-fil" onclick="filtrar()">Filtrar</button>
+    <button class="btn-limpar" onclick="limpar()">Limpar</button>
+    <span class="resultado-count" id="count"></span>
+  </div>
+</div>
+<div class="estoque-body">
+  <div class="cars-grid" id="carsGrid">
+    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+  </div>
+</div>
+<div class="compare-bar" id="compareBar">
+  <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--silver);flex-shrink:0">Comparar:</div>
+  <div class="compare-slots" id="compareSlots"></div>
+  <button class="btn-compare-go" onclick="abrirComparador()">Comparar agora</button>
+  <button class="btn-compare-clear" onclick="limparComparador()">Limpar</button>
+</div>
+<div class="modal-compare" id="modalCompare">
+  <div class="compare-inner">
+    <button class="compare-close" onclick="fecharComparador()">✕</button>
+    <div class="eyebrow">Comparador</div>
+    <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:900;text-transform:uppercase">Comparação</h2>
+    <div style="overflow-x:auto"><table class="compare-table" id="compareTable"></table></div>
+  </div>
+</div>
+<footer>
+  <div class="foot-inner">
+    <div class="foot-logo"><img src="logo.jpg" alt="Maradona's Car"></div>
+    <div class="foot-links">
+      <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+      <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2025 Maradona's Car. Todos os direitos reservados.</span>
+    <span>CNPJ: 00.000.000/0001-00 · DETRAN-MG 00000</span>
+  </div>
+</footer>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="db.js"></script>
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+function toggleTheme(){const l=document.body.classList.toggle('light');localStorage.setItem('mc_theme',l?'light':'dark');document.getElementById('themeBtn').textContent=l?'☀️':'🌙'}
+if(localStorage.getItem('mc_theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️'}
+let todosCarros=[];
+let comparar=[];
+
+async function init(){
+  todosCarros=await dbGetCarros();
+  const marcas=[...new Set(todosCarros.map(c=>c.marca).filter(Boolean))].sort();
+  const sel=document.getElementById('filMarca');
+  marcas.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;sel.appendChild(o)});
+  ['busca','filMarca','filTipo','filPreco','filStatus'].forEach(id=>document.getElementById(id).addEventListener('input',filtrar));
+  filtrar();
+}
+
+function filtrar(){
+  const busca=document.getElementById('busca').value.toLowerCase();
+  const marca=document.getElementById('filMarca').value;
+  const tipo=document.getElementById('filTipo').value;
+  const preco=document.getElementById('filPreco').value;
+  const status=document.getElementById('filStatus').value;
+  let res=todosCarros.filter(c=>{
+    if(busca&&!`${c.marca} ${c.modelo} ${c.ano}`.toLowerCase().includes(busca))return false;
+    if(marca&&c.marca!==marca)return false;
+    if(tipo&&c.tipo!==tipo)return false;
+    if(preco){const[min,max]=preco.split('-').map(Number);if(Number(c.preco)<min||Number(c.preco)>max)return false}
+    if(status==='disponivel'&&(c.vendido||c.reservado))return false;
+    if(status==='reservado'&&!c.reservado)return false;
+    if(status==='vendido'&&!c.vendido)return false;
+    return true;
+  });
+  renderGrid(res);
+  document.getElementById('count').textContent=`${res.length} veículo${res.length!==1?'s':''} encontrado${res.length!==1?'s':''}`;
+}
+
+function limpar(){['busca','filMarca','filTipo','filPreco','filStatus'].forEach(id=>document.getElementById(id).value='');filtrar()}
+
+function renderGrid(lista){
+  const grid=document.getElementById('carsGrid');
+  if(!lista.length){grid.innerHTML=`<div class="empty-state"><div style="font-size:64px">🔍</div><h3 style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;margin-bottom:.5rem">Nenhum Veículo</h3><p>Tente outros filtros ou <a href="contato.html" style="color:var(--red2)">entre em contato</a>.</p></div>`;return}
+  grid.innerHTML=lista.map(c=>{
+    const f=c.fotos&&c.fotos[0]?c.fotos[0]:(c.foto||'');
+    const fc=c.fotos?c.fotos.length:(c.foto?1:0);
+    const zap=`https://wa.me/5531999995555?text=Olá! Tenho interesse no ${c.marca} ${c.modelo} ${c.ano} – R$ ${Number(c.preco).toLocaleString('pt-BR')}`;
+    const badge=c.vendido?'<div class="card-badge badge-vendido">Vendido</div>':c.reservado?'<div class="card-badge badge-reservado">Reservado</div>':c.destaque?'<div class="card-badge badge-destaque">Destaque</div>':'';
+    return `<div class="car-card" onclick="location.href='carro.html?id=${c.id}'">
+      ${badge}
+      ${fc>1?`<div class="foto-count">📷 ${fc}</div>`:''}
+      <button class="compare-chk${comparar.find(x=>x.id===c.id)?' selected':''}" data-id="${c.id}" onclick="toggleComparar('${c.id}','${c.marca} ${c.modelo}',event)">${comparar.find(x=>x.id===c.id)?'✓ Comparar':'+ Comparar'}</button>
+      <div class="card-img">${f?`<img src="${f}" loading="lazy">`:'<div>🚗</div>'}<div class="card-overlay"></div></div>
+      <div class="card-body">
+        <div class="card-brand">${c.marca}</div>
+        <div class="card-name">${c.modelo}</div>
+        <div class="card-specs">
+          <div class="spec">📅 ${c.ano}</div>
+          ${c.motor?`<div class="spec">⚡ ${c.motor}</div>`:''}
+          ${c.km?`<div class="spec">⏱ ${Number(c.km).toLocaleString('pt-BR')} km</div>`:''}
+          ${c.cambio?`<div class="spec">⚙️ ${c.cambio}</div>`:''}
+        </div>
+        <div class="card-footer">
+          <div>
+            <div class="price"><small>R$</small> ${Number(c.preco).toLocaleString('pt-BR')}</div>
+            ${c.views?`<div class="views-count">👁 ${c.views} visualizações</div>`:''}
+          </div>
+          <div style="display:flex;gap:.4rem">
+            <a class="btn-ver" href="carro.html?id=${c.id}" onclick="event.stopPropagation()">Ver +</a>
+            ${!c.vendido?`<a class="btn-zap" href="${zap}" target="_blank" onclick="event.stopPropagation()">💬</a>`:''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// COMPARADOR
+function toggleComparar(id,nome,e){
+  e.stopPropagation();
+  const btn=e.currentTarget;
+  if(comparar.find(c=>c.id===id)){comparar=comparar.filter(c=>c.id!==id);btn.classList.remove('selected');btn.textContent='+ Comparar';}
+  else{if(comparar.length>=3){alert('Máximo 3 veículos.');return}comparar.push({id,nome});btn.classList.add('selected');btn.textContent='✓ Comparar';}
+  renderCompareBar();
+}
+function renderCompareBar(){
+  const bar=document.getElementById('compareBar');
+  if(!comparar.length){bar.classList.remove('visible');return}
+  bar.classList.add('visible');
+  document.getElementById('compareSlots').innerHTML=comparar.map(c=>`<div class="compare-slot">${c.nome}<button onclick="removerComparar('${c.id}')">✕</button></div>`).join('');
+}
+function removerComparar(id){
+  comparar=comparar.filter(c=>c.id!==id);
+  document.querySelectorAll('.compare-chk').forEach(b=>{if(b.dataset.id===id){b.classList.remove('selected');b.textContent='+ Comparar'}});
+  renderCompareBar();
+}
+function limparComparador(){comparar=[];document.querySelectorAll('.compare-chk').forEach(b=>{b.classList.remove('selected');b.textContent='+ Comparar'});renderCompareBar()}
+function abrirComparador(){
+  if(comparar.length<2){alert('Selecione ao menos 2 veículos.');return}
+  const sel=comparar.map(c=>todosCarros.find(t=>t.id===c.id)).filter(Boolean);
+  const campos=[{l:'Foto',k:'foto'},{l:'Preço',k:'preco'},{l:'Ano',k:'ano'},{l:'KM',k:'km'},{l:'Motor',k:'motor'},{l:'Câmbio',k:'cambio'},{l:'Tipo',k:'tipo'},{l:'Cor',k:'cor'},{l:'Visualizações',k:'views'}];
+  const hdr='<tr><th>Característica</th>'+sel.map(c=>`<th>${c.marca} ${c.modelo}</th>`).join('')+'</tr>';
+  const rows=campos.map(({l,k})=>{
+    const cells=sel.map(c=>{
+      if(k==='foto'){const f=c.fotos&&c.fotos[0]?c.fotos[0]:(c.foto||'');return `<td>${f?`<img class="compare-foto" src="${f}">`:'🚗'}</td>`}
+      if(k==='preco')return `<td style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--red2)">R$ ${Number(c[k]||0).toLocaleString('pt-BR')}</td>`;
+      if(k==='km')return `<td>${c[k]?Number(c[k]).toLocaleString('pt-BR')+' km':'–'}</td>`;
+      return `<td>${c[k]||'–'}</td>`;
+    }).join('');
+    return `<tr><td class="label">${l}</td>${cells}</tr>`;
+  }).join('');
+  document.getElementById('compareTable').innerHTML=hdr+rows;
+  document.getElementById('modalCompare').classList.add('open');
+}
+function fecharComparador(){document.getElementById('modalCompare').classList.remove('open')}
+
+init();
+</script>
+</body>
+</html>

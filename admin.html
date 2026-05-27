@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Admin – Maradona's Car</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#D0401A;--red2:#e8521f;--bg:#0f0f0f;--bg2:#161616;--bg3:#1f1f1f;--bg4:#252525;--silver:#a0a0a0;--white:#fff;--border:rgba(255,255,255,0.08);--green:#22c55e;--yellow:#f59e0b}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--white);min-height:100vh}
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:2rem}
+.login-box{background:var(--bg3);border:1px solid var(--border);padding:3rem;width:100%;max-width:420px;text-align:center}
+.login-logo img{height:60px;object-fit:contain;margin-bottom:2rem}
+.login-box h2{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:.5rem}
+.login-box p{font-size:14px;color:var(--silver);margin-bottom:2rem}
+.login-input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--white);padding:14px 18px;font-size:15px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .2s;margin-bottom:1rem;display:block}
+.login-input:focus{border-color:var(--red2)}
+.login-input::placeholder{color:rgba(160,160,160,.5)}
+.login-btn{width:100%;background:var(--red);color:#fff;border:none;padding:15px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:3px;text-transform:uppercase;cursor:pointer}
+.login-btn:hover{background:var(--red2)}
+.login-err{color:#f87171;font-size:13px;margin-top:.75rem;display:none}
+/* LAYOUT */
+.admin-wrap{display:none;min-height:100vh;flex-direction:column}
+.admin-nav{background:var(--bg2);border-bottom:1px solid rgba(208,64,26,.3);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.admin-logo{display:flex;align-items:center;gap:1rem}
+.admin-logo img{height:40px;object-fit:contain}
+.admin-badge{background:var(--red);color:#fff;padding:3px 10px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.admin-nav-right{display:flex;align-items:center;gap:1rem}
+.btn-site{background:transparent;color:var(--silver);border:1px solid var(--border);padding:8px 18px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-site:hover{border-color:var(--white);color:var(--white)}
+.btn-sair{background:transparent;color:var(--silver);border:none;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:8px 12px}
+.btn-sair:hover{color:var(--red2)}
+.admin-body{flex:1;max-width:1400px;margin:0 auto;padding:2.5rem 2rem;width:100%}
+/* TABS */
+.admin-tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:1px solid var(--border);overflow-x:auto}
+.admin-tab{padding:12px 20px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;color:var(--silver);border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;white-space:nowrap}
+.admin-tab.active{color:var(--red2);border-bottom-color:var(--red2)}
+.admin-tab-content{display:none}
+.admin-tab-content.active{display:block}
+/* STATS */
+.stats-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-bottom:2.5rem}
+.stat-box{background:var(--bg3);padding:1.5rem}
+.s-num{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900}
+.s-lbl{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);margin-top:2px}
+.s-num.red{color:var(--red2)}.s-num.green{color:var(--green)}.s-num.yellow{color:var(--yellow)}
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:2rem;align-items:start}
+.panel{background:var(--bg3);border:1px solid var(--border)}
+.panel-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.panel-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:1px}
+.panel-body{padding:1.5rem}
+.form-row{margin-bottom:1.1rem}
+.form-row label{display:block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);margin-bottom:6px}
+.form-row input,.form-row select,.form-row textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--white);padding:11px 14px;font-size:14px;font-family:'Barlow',sans-serif;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--red2)}
+.form-row select option{background:var(--bg3);color:var(--white)}
+.form-row input::placeholder,.form-row textarea::placeholder{color:rgba(160,160,160,.4)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-check{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;font-weight:500}
+.form-check input[type=checkbox]{width:18px;height:18px;accent-color:var(--red);cursor:pointer}
+/* FOTOS */
+.fotos-area{border:1px dashed rgba(255,255,255,.15);padding:1rem;margin-top:.5rem}
+.fotos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:.75rem;min-height:50px}
+.foto-thumb{position:relative;aspect-ratio:4/3;background:var(--bg4);overflow:hidden}
+.foto-thumb img{width:100%;height:100%;object-fit:cover}
+.rem-foto{position:absolute;top:4px;right:4px;background:rgba(208,64,26,.9);color:#fff;border:none;width:20px;height:20px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.foto-thumb.principal::after{content:'CAPA';position:absolute;bottom:0;left:0;right:0;background:rgba(208,64,26,.8);color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;text-align:center;padding:2px}
+.add-foto-btn{width:100%;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.12);padding:9px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--silver);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+.add-foto-btn:hover{border-color:var(--red2);color:var(--red2)}
+.fotos-hint{font-size:11px;color:rgba(160,160,160,.35);margin-top:.4rem}
+/* VIDEO */
+.video-preview{width:100%;aspect-ratio:16/9;background:var(--bg4);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-top:.5rem;font-size:13px;color:var(--silver)}
+.video-preview iframe{width:100%;height:100%;border:none}
+/* BOTÕES */
+.btn-row{display:flex;gap:.75rem;margin-top:1.25rem;flex-wrap:wrap}
+.btn-save{flex:1;background:var(--red);color:#fff;border:none;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+.btn-save:hover{background:var(--red2)}
+.btn-clear{background:transparent;color:var(--silver);border:1px solid var(--border);padding:13px 20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.btn-clear:hover{border-color:var(--white);color:var(--white)}
+/* LISTA */
+.search-bar{display:flex;gap:.75rem;padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.search-input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--white);padding:10px 14px;font-size:14px;font-family:'Barlow',sans-serif;outline:none;min-width:140px}
+.search-input:focus{border-color:var(--red2)}
+.search-input::placeholder{color:rgba(160,160,160,.4)}
+.export-btn{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--silver);padding:10px 16px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.export-btn:hover{border-color:var(--white);color:var(--white)}
+.cars-list{max-height:640px;overflow-y:auto}
+.cars-list::-webkit-scrollbar{width:4px}
+.cars-list::-webkit-scrollbar-thumb{background:var(--border)}
+.car-row{display:grid;grid-template-columns:64px 1fr auto;gap:1rem;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid var(--border);transition:background .15s}
+.car-row:hover{background:rgba(255,255,255,.03)}
+.car-row.vendido-row{opacity:.55}
+.car-thumb{width:64px;height:48px;background:var(--bg4);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px}
+.car-thumb img{width:100%;height:100%;object-fit:cover}
+.cname{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase}
+.cmeta{font-size:12px;color:var(--silver);margin-top:2px}
+.cprice{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--red2);margin-top:3px}
+.car-row-actions{display:flex;gap:.4rem;flex-shrink:0;flex-wrap:wrap}
+.btn-action{padding:5px 10px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:1px solid;transition:all .2s}
+.btn-edit{background:rgba(208,64,26,.12);border-color:rgba(208,64,26,.3);color:var(--red2)}
+.btn-edit:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-vender{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.25);color:var(--green)}
+.btn-vender:hover{background:var(--green);color:#111;border-color:var(--green)}
+.btn-reservar{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:var(--yellow)}
+.btn-reservar:hover{background:var(--yellow);color:#111;border-color:var(--yellow)}
+.btn-view-link{background:rgba(255,255,255,.05);border-color:var(--border);color:var(--silver);text-decoration:none;display:inline-flex;align-items:center}
+.btn-view-link:hover{border-color:var(--silver)}
+.btn-del{background:rgba(255,255,255,.04);border-color:var(--border);color:var(--silver)}
+.btn-del:hover{background:#7f1d1d;border-color:#f87171;color:#fff}
+.badge-s{padding:2px 7px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:6px;vertical-align:middle}
+.badge-dest{background:rgba(208,64,26,.2);border:1px solid rgba(208,64,26,.4);color:var(--red2)}
+.badge-vend{background:rgba(55,65,81,.4);border:1px solid rgba(107,114,128,.3);color:#9ca3af}
+.badge-res{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:var(--yellow)}
+.empty-list{text-align:center;padding:3rem;color:var(--silver)}
+/* RELATÓRIOS */
+.relatorio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:2rem}
+.rel-card{background:var(--bg3);border:1px solid var(--border);padding:1.75rem}
+.rel-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;margin-bottom:1.25rem;letter-spacing:1px}
+.rel-list{display:flex;flex-direction:column;gap:.75rem}
+.rel-item{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:14px}
+.rel-item:last-child{border:none}
+.rel-item .val{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900}
+/* SENHA */
+.senha-section{background:var(--bg3);border:1px solid var(--border);padding:2rem;max-width:480px}
+.senha-section h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:1.5rem}
+.senha-info{background:rgba(208,64,26,.08);border:1px solid rgba(208,64,26,.2);padding:1rem;margin-bottom:1.5rem;font-size:13px;color:var(--silver);line-height:1.6}
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg3);border:1px solid rgba(208,64,26,.4);border-left:4px solid var(--red);padding:1rem 1.5rem;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-left-color:var(--green)}
+.toast p{font-size:14px;font-weight:500}
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:none;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg3);border:1px solid var(--border);padding:2rem;max-width:400px;width:90%}
+.modal h4{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:.75rem}
+.modal p{font-size:14px;color:var(--silver);line-height:1.6;margin-bottom:1.5rem}
+.modal-btns{display:flex;gap:.75rem}
+.btn-confirm{background:var(--red);color:#fff;border:none;padding:10px 24px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;flex:1}
+.btn-cancel{background:transparent;color:var(--silver);border:1px solid var(--border);padding:10px 24px;font-size:13px;font-weight:700;text-transform:uppercase;cursor:pointer}
+@media(max-width:1000px){.main-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.stats-bar{grid-template-columns:1fr 1fr}.form-2col{grid-template-columns:1fr}.admin-nav-right .btn-site{display:none}}
+</style>
+</head>
+<body>
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo"><img src="logo.jpg" alt="Maradona's Car"></div>
+    <h2>Painel Admin</h2>
+    <p>Acesse com suas credenciais</p>
+    <input class="login-input" type="text" id="lUser" placeholder="Usuário" autocomplete="username">
+    <input class="login-input" type="password" id="lPass" placeholder="Senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <p class="login-err" id="loginErr">❌ Usuário ou senha incorretos</p>
+  </div>
+</div>
+
+<div class="admin-wrap" id="adminWrap">
+  <div class="admin-nav">
+    <div class="admin-logo"><img src="logo.jpg" alt="Maradona's Car"><span class="admin-badge">Admin</span></div>
+    <div class="admin-nav-right">
+      <a href="index.html" class="btn-site" target="_blank">Ver Site →</a>
+      <span style="font-size:13px;color:var(--silver)" id="adminUser"></span>
+      <button class="btn-sair" onclick="sair()">Sair</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+    <div class="stats-bar">
+      <div class="stat-box"><div class="s-num" id="sTot">0</div><div class="s-lbl">Total Veículos</div></div>
+      <div class="stat-box"><div class="s-num green" id="sDisp">0</div><div class="s-lbl">Disponíveis</div></div>
+      <div class="stat-box"><div class="s-num yellow" id="sRes">0</div><div class="s-lbl">Reservados</div></div>
+      <div class="stat-box"><div class="s-num" style="color:#9ca3af" id="sVend">0</div><div class="s-lbl">Vendidos</div></div>
+      <div class="stat-box"><div class="s-num red" id="sValTot">—</div><div class="s-lbl">Valor Estoque</div></div>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="setTab('carros',this)">🚗 Cadastrar</button>
+      <button class="admin-tab" onclick="setTab('lista',this)">📋 Estoque</button>
+      <button class="admin-tab" onclick="setTab('relatorio',this)">📊 Relatórios</button>
+      <button class="admin-tab" onclick="setTab('senha',this)">🔐 Senha</button>
+    </div>
+
+    <!-- TAB CADASTRAR -->
+    <div class="admin-tab-content active" id="tab-carros">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title" id="formTitle">Cadastrar Veículo</div>
+          <button class="btn-clear" id="btnCancelEdit" onclick="clearForm()" style="display:none;padding:6px 14px;font-size:11px">✕ Cancelar edição</button>
+        </div>
+        <div class="panel-body">
+          <input type="hidden" id="editId">
+          <!-- FOTOS -->
+          <div class="form-row">
+            <label>Fotos do Veículo (até 8 – primeira é a capa)</label>
+            <div class="fotos-area">
+              <div class="fotos-grid" id="fotosGrid"></div>
+              <button class="add-foto-btn" onclick="document.getElementById('fotoInput').click()">📷 Adicionar fotos</button>
+              <input type="file" id="fotoInput" accept="image/*" multiple style="display:none" onchange="loadFotos(event)">
+              <p class="fotos-hint">Clique no ✕ vermelho para remover. Arraste para reordenar.</p>
+            </div>
+          </div>
+          <!-- VÍDEO -->
+          <div class="form-row">
+            <label>Vídeo do Veículo (link YouTube)</label>
+            <input type="text" id="fVideo" placeholder="https://youtube.com/watch?v=..." oninput="previewVideo()">
+            <div class="video-preview" id="videoPreview"><span>🎬 Cole o link do YouTube acima</span></div>
+          </div>
+          <div class="form-2col">
+            <div class="form-row"><label>Marca *</label>
+              <select id="fMarca">
+                <option value="">Selecione...</option>
+                <option>Chevrolet</option><option>Fiat</option><option>Ford</option><option>Honda</option>
+                <option>Hyundai</option><option>Jeep</option><option>Kia</option><option>Mitsubishi</option>
+                <option>Nissan</option><option>Peugeot</option><option>Renault</option><option>Toyota</option>
+                <option>Volkswagen</option><option>Outra</option>
+              </select>
+            </div>
+            <div class="form-row"><label>Modelo *</label><input type="text" id="fModelo" placeholder="Ex: Onix LT"></div>
+          </div>
+          <div class="form-2col">
+            <div class="form-row"><label>Ano *</label><input type="number" id="fAno" placeholder="2023" min="1990" max="2026"></div>
+            <div class="form-row"><label>Preço (R$) *</label><input type="number" id="fPreco" placeholder="75000"></div>
+          </div>
+          <div class="form-2col">
+            <div class="form-row"><label>Quilometragem</label><input type="number" id="fKm" placeholder="45000"></div>
+            <div class="form-row"><label>Motor</label><input type="text" id="fMotor" placeholder="1.0 Turbo"></div>
+          </div>
+          <div class="form-2col">
+            <div class="form-row"><label>Câmbio</label>
+              <select id="fCambio"><option value="">Selecione...</option><option>Manual</option><option>Automático</option><option>CVT</option><option>Automatizado</option></select>
+            </div>
+            <div class="form-row"><label>Tipo</label>
+              <select id="fTipo"><option value="">Selecione...</option><option>Hatch</option><option>Sedã</option><option>SUV</option><option>Pickup</option><option>Van</option><option>Esportivo</option></select>
+            </div>
+          </div>
+          <div class="form-row"><label>Cor</label><input type="text" id="fCor" placeholder="Branco Pérola"></div>
+          <div class="form-row"><label>Descrição / Opcionais</label><textarea id="fDesc" rows="3" placeholder="Ar condicionado, câmera de ré, sensor de estacionamento..."></textarea></div>
+          <div class="form-row"><label class="form-check"><input type="checkbox" id="fDestaque"> Marcar como destaque (aparece na home)</label></div>
+          <div class="btn-row">
+            <button class="btn-save" onclick="salvar()">💾 Salvar Veículo</button>
+            <button class="btn-clear" onclick="clearForm()">Limpar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB LISTA -->
+    <div class="admin-tab-content" id="tab-lista">
+      <div class="panel">
+        <div class="panel-header"><div class="panel-title">Estoque Completo</div></div>
+        <div class="search-bar">
+          <input class="search-input" type="text" id="searchInput" placeholder="🔍  Buscar..." oninput="renderLista()">
+          <select class="search-input" id="filterStatus" style="flex:0;min-width:140px" onchange="renderLista()">
+            <option value="">Todos</option><option value="disponivel">Disponíveis</option>
+            <option value="reservado">Reservados</option><option value="vendido">Vendidos</option>
+          </select>
+          <button class="export-btn" onclick="exportarPDF()">📄 Exportar PDF</button>
+        </div>
+        <div class="cars-list" id="carsList"></div>
+      </div>
+    </div>
+
+    <!-- TAB RELATÓRIOS -->
+    <div class="admin-tab-content" id="tab-relatorio">
+      <div class="eyebrow" style="display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red2);margin-bottom:1rem"><span style="width:24px;height:2px;background:var(--red2);display:block"></span>Análise do Estoque</div>
+      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;text-transform:uppercase;line-height:.95;margin-bottom:2rem">Relatórios</h2>
+      <div class="relatorio-grid" id="relatorioGrid"></div>
+    </div>
+
+    <!-- TAB SENHA -->
+    <div class="admin-tab-content" id="tab-senha">
+      <div class="senha-section">
+        <h3>Alterar Senha de Acesso</h3>
+        <div class="senha-info">💡 Após alterar, você será desconectado e deverá entrar com a nova senha. Guarde em local seguro!</div>
+        <div class="form-row"><label>Usuário</label><input type="text" id="sUser" placeholder="Seu usuário"></div>
+        <div class="form-row"><label>Senha Atual</label><input type="password" id="sSenhaAtual" placeholder="Senha atual"></div>
+        <div class="form-row"><label>Nova Senha</label><input type="password" id="sNovaSenha" placeholder="Mínimo 6 caracteres"></div>
+        <div class="form-row"><label>Confirmar Nova Senha</label><input type="password" id="sConfSenha" placeholder="Digite novamente"></div>
+        <button class="btn-save" onclick="alterarSenha()" style="width:100%;margin-top:.5rem">🔐 Alterar Senha</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL GENÉRICO -->
+<div class="modal-bg" id="modalGenerico">
+  <div class="modal">
+    <h4 id="modalTitle">Confirmar</h4>
+    <p id="modalMsg"></p>
+    <div class="form-row" id="modalInputArea" style="display:none">
+      <label id="modalInputLabel"></label>
+      <input type="text" id="modalInput" placeholder="">
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-confirm" id="modalConfirmBtn">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><p id="toastMsg"></p></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="db.js"></script>
+<script>
+// AUTH
+function getCreds(){const s=localStorage.getItem('mc_creds');return s?JSON.parse(s):{admin:'maradona2025'}}
+function saveCreds(o){localStorage.setItem('mc_creds',JSON.stringify(o))}
+
+function doLogin(){
+  const u=document.getElementById('lUser').value.trim();
+  const p=document.getElementById('lPass').value;
+  const creds=getCreds();
+  if(creds[u]&&creds[u]===p){
+    sessionStorage.setItem('mcAdmin',u);
+    document.getElementById('loginWrap').style.display='none';
+    document.getElementById('adminWrap').style.display='flex';
+    document.getElementById('adminUser').textContent='👤 '+u;
+    carregarTudo();
+  } else {document.getElementById('loginErr').style.display='block'}
+}
+function sair(){sessionStorage.removeItem('mcAdmin');location.reload()}
+if(sessionStorage.getItem('mcAdmin')){
+  document.getElementById('loginWrap').style.display='none';
+  document.getElementById('adminWrap').style.display='flex';
+  document.getElementById('adminUser').textContent='👤 '+sessionStorage.getItem('mcAdmin');
+}
+
+// TABS
+function setTab(id,btn){
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  if(id==='lista')renderLista();
+  if(id==='relatorio')renderRelatorio();
+}
+
+// DADOS
+let todosCarros=[];
+async function carregarTudo(){
+  todosCarros=await dbGetCarros();
+  renderLista();updateStats();
+}
+
+// FOTOS
+let fotosAtuais=[];
+function loadFotos(e){
+  const files=Array.from(e.target.files);
+  const max=8-fotosAtuais.length;
+  files.slice(0,max).forEach(file=>{
+    if(file.size>5*1024*1024){showToast('Foto muito grande (máx 5MB): '+file.name);return}
+    const reader=new FileReader();
+    reader.onload=ev=>{fotosAtuais.push(ev.target.result);renderFotosGrid()};
+    reader.readAsDataURL(file);
+  });
+  e.target.value='';
+}
+function removerFoto(i){fotosAtuais.splice(i,1);renderFotosGrid()}
+function renderFotosGrid(){
+  document.getElementById('fotosGrid').innerHTML=fotosAtuais.map((f,i)=>`
+    <div class="foto-thumb${i===0?' principal':''}">
+      <img src="${f}">
+      <button class="rem-foto" onclick="removerFoto(${i})">✕</button>
+    </div>`).join('');
+}
+
+// VÍDEO
+function previewVideo(){
+  const v=document.getElementById('fVideo').value.trim();
+  const prev=document.getElementById('videoPreview');
+  if(!v){prev.innerHTML='<span>🎬 Cole o link do YouTube acima</span>';return}
+  let vid='';
+  const m=v.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if(m)vid=m[1];
+  if(vid){prev.innerHTML=`<iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe>`}
+  else{prev.innerHTML='<span>❌ Link do YouTube inválido</span>'}
+}
+
+// FORM
+function clearForm(){
+  ['fMarca','fModelo','fAno','fPreco','fKm','fMotor','fCambio','fTipo','fCor','fDesc','fVideo'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('fDestaque').checked=false;
+  document.getElementById('editId').value='';
+  document.getElementById('formTitle').textContent='Cadastrar Veículo';
+  document.getElementById('btnCancelEdit').style.display='none';
+  fotosAtuais=[];renderFotosGrid();
+  document.getElementById('videoPreview').innerHTML='<span>🎬 Cole o link do YouTube acima</span>';
+}
+
+async function salvar(){
+  const marca=document.getElementById('fMarca').value;
+  const modelo=document.getElementById('fModelo').value.trim();
+  const ano=document.getElementById('fAno').value;
+  const preco=document.getElementById('fPreco').value;
+  if(!marca||!modelo||!ano||!preco){showToast('Preencha Marca, Modelo, Ano e Preço.');return}
+  const btn=document.querySelector('.btn-save');btn.textContent='Salvando...';btn.disabled=true;
+  try{
+    const editId=document.getElementById('editId').value;
+    const carro={
+      marca,modelo,ano,preco,
+      km:document.getElementById('fKm').value,
+      motor:document.getElementById('fMotor').value,
+      cambio:document.getElementById('fCambio').value,
+      tipo:document.getElementById('fTipo').value,
+      cor:document.getElementById('fCor').value,
+      descricao:document.getElementById('fDesc').value,
+      video:document.getElementById('fVideo').value,
+      destaque:document.getElementById('fDestaque').checked,
+      fotos:[...fotosAtuais],
+      foto:fotosAtuais[0]||''
+    };
+    if(editId)carro.id=editId;
+    const saved=await dbSaveCarro(carro);
+    const idx=todosCarros.findIndex(c=>c.id===saved.id);
+    if(idx>=0)todosCarros[idx]=saved;else todosCarros.unshift(saved);
+    clearForm();updateStats();renderLista();
+    showToast(editId?'Veículo atualizado!':'Veículo cadastrado com sucesso!','success');
+  }catch(e){showToast('Erro ao salvar: '+e.message)}
+  finally{btn.textContent='💾 Salvar Veículo';btn.disabled=false}
+}
+
+function editCarro(id){
+  const c=todosCarros.find(x=>x.id===id);if(!c)return;
+  setTab('carros',document.querySelectorAll('.admin-tab')[0]);
+  document.getElementById('fMarca').value=c.marca||'';
+  document.getElementById('fModelo').value=c.modelo||'';
+  document.getElementById('fAno').value=c.ano||'';
+  document.getElementById('fPreco').value=c.preco||'';
+  document.getElementById('fKm').value=c.km||'';
+  document.getElementById('fMotor').value=c.motor||'';
+  document.getElementById('fCambio').value=c.cambio||'';
+  document.getElementById('fTipo').value=c.tipo||'';
+  document.getElementById('fCor').value=c.cor||'';
+  document.getElementById('fDesc').value=c.descricao||'';
+  document.getElementById('fVideo').value=c.video||'';
+  document.getElementById('fDestaque').checked=!!c.destaque;
+  document.getElementById('editId').value=c.id;
+  document.getElementById('formTitle').textContent='Editar Veículo';
+  document.getElementById('btnCancelEdit').style.display='block';
+  fotosAtuais=c.fotos&&c.fotos.length?[...c.fotos]:(c.foto?[c.foto]:[]);
+  renderFotosGrid();previewVideo();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// MODAL GENÉRICO
+let modalCb=null;
+function openModal(title,msg,confirmLabel,cb,inputLabel,inputPlaceholder){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalMsg').textContent=msg;
+  document.getElementById('modalConfirmBtn').textContent=confirmLabel||'Confirmar';
+  const ia=document.getElementById('modalInputArea');
+  if(inputLabel){ia.style.display='block';document.getElementById('modalInputLabel').textContent=inputLabel;document.getElementById('modalInput').placeholder=inputPlaceholder||''}
+  else{ia.style.display='none';document.getElementById('modalInput').value=''}
+  modalCb=cb;
+  document.getElementById('modalGenerico').classList.add('open');
+}
+function closeModal(){document.getElementById('modalGenerico').classList.remove('open');modalCb=null}
+document.getElementById('modalConfirmBtn').onclick=()=>{if(modalCb)modalCb();closeModal()}
+
+async function marcarVendido(id,nome,jaVendido){
+  if(jaVendido){
+    await dbMarcarVendido(id,false,null);
+    const idx=todosCarros.findIndex(c=>c.id===id);
+    if(idx>=0){todosCarros[idx].vendido=false;todosCarros[idx].dataVenda=null}
+    renderLista();updateStats();showToast('Veículo marcado como disponível.','success');
+    return;
+  }
+  openModal('Marcar como Vendido',`Confirma a venda do ${nome}?`,'✅ Confirmar venda',async()=>{
+    const dataVenda=new Date().toLocaleDateString('pt-BR');
+    await dbMarcarVendido(id,true);
+    const idx=todosCarros.findIndex(c=>c.id===id);
+    if(idx>=0){todosCarros[idx].vendido=true;todosCarros[idx].dataVenda=dataVenda;todosCarros[idx].reservado=false}
+    renderLista();updateStats();showToast('Venda registrada!','success');
+  });
+}
+
+async function reservarCarro(id,nome,jaReservado){
+  if(jaReservado){
+    await dbReservarCarro(id,false,null);
+    const idx=todosCarros.findIndex(c=>c.id===id);
+    if(idx>=0){todosCarros[idx].reservado=false;todosCarros[idx].reservadoPor=null}
+    renderLista();updateStats();showToast('Reserva cancelada.');return;
+  }
+  openModal('Reservar Veículo',`Reservar o ${nome} por 24h?`,'🔒 Reservar',async()=>{
+    const cliente=document.getElementById('modalInput').value.trim()||'Cliente';
+    await dbReservarCarro(id,true,cliente);
+    const idx=todosCarros.findIndex(c=>c.id===id);
+    if(idx>=0){todosCarros[idx].reservado=true;todosCarros[idx].reservadoPor=cliente}
+    renderLista();updateStats();showToast('Veículo reservado por 24h!','success');
+  },'Nome do cliente','Ex: João Silva');
+}
+
+async function deleteCarro(id,nome){
+  openModal('Excluir Veículo',`Excluir o ${nome}? Esta ação não pode ser desfeita.`,'🗑 Excluir',async()=>{
+    await dbDeleteCarro(id);
+    todosCarros=todosCarros.filter(c=>c.id!==id);
+    renderLista();updateStats();showToast('Veículo excluído.');
+  });
+}
+
+// LISTA
+function renderLista(){
+  const carros=todosCarros;
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const status=document.getElementById('filterStatus').value;
+  let lista=carros.filter(c=>{
+    if(q&&!`${c.marca} ${c.modelo} ${c.ano}`.toLowerCase().includes(q))return false;
+    if(status==='disponivel'&&(c.vendido||c.reservado))return false;
+    if(status==='reservado'&&!c.reservado)return false;
+    if(status==='vendido'&&!c.vendido)return false;
+    return true;
+  });
+  const el=document.getElementById('carsList');
+  if(!lista.length){el.innerHTML=`<div class="empty-list"><div style="font-size:40px">🚗</div><p>Nenhum veículo encontrado.</p></div>`;return}
+  el.innerHTML=lista.map(c=>{
+    const thumb=c.fotos&&c.fotos[0]?`<img src="${c.fotos[0]}">`:(c.foto?`<img src="${c.foto}">`:'🚗');
+    const fc=c.fotos?c.fotos.length:(c.foto?1:0);
+    const badges=(c.destaque?`<span class="badge-s badge-dest">★</span>`:'')+(c.vendido?`<span class="badge-s badge-vend">Vendido</span>`:c.reservado?`<span class="badge-s badge-res">Reservado</span>`:'');
+    return `<div class="car-row${c.vendido?' vendido-row':''}">
+      <div class="car-thumb">${thumb}</div>
+      <div>
+        <div class="cname">${c.marca} ${c.modelo}${badges}</div>
+        <div class="cmeta">${c.ano}${c.km?' · '+Number(c.km).toLocaleString('pt-BR')+' km':''}${c.cambio?' · '+c.cambio:''}${fc>1?' · 📷 '+fc+' fotos':''}${c.views?' · 👁 '+c.views:''}</div>
+        <div class="cprice">R$ ${Number(c.preco).toLocaleString('pt-BR')}</div>
+      </div>
+      <div class="car-row-actions">
+        <a class="btn-action btn-view-link" href="carro.html?id=${c.id}" target="_blank" title="Ver página">👁</a>
+        ${!c.vendido?`<button class="btn-action btn-edit" onclick="editCarro('${c.id}')">Editar</button>`:''}
+        <button class="btn-action ${c.vendido?'btn-edit':'btn-vender'}" onclick="marcarVendido('${c.id}','${c.marca} ${c.modelo}',${!!c.vendido})">${c.vendido?'↩ Disponível':'✅ Vender'}</button>
+        ${!c.vendido?`<button class="btn-action btn-reservar" onclick="reservarCarro('${c.id}','${c.marca} ${c.modelo}',${!!c.reservado})">${c.reservado?'↩ Liberar':'🔒 Reservar'}</button>`:''}
+        <button class="btn-action btn-del" onclick="deleteCarro('${c.id}','${c.marca} ${c.modelo}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateStats(){
+  document.getElementById('sTot').textContent=todosCarros.length;
+  document.getElementById('sDisp').textContent=todosCarros.filter(c=>!c.vendido&&!c.reservado).length;
+  document.getElementById('sRes').textContent=todosCarros.filter(c=>c.reservado&&!c.vendido).length;
+  document.getElementById('sVend').textContent=todosCarros.filter(c=>c.vendido).length;
+  const tot=todosCarros.filter(c=>!c.vendido).reduce((a,c)=>a+Number(c.preco||0),0);
+  document.getElementById('sValTot').textContent=tot?'R$'+Math.round(tot/1000)+'k':'—';
+}
+
+// RELATÓRIOS
+function renderRelatorio(){
+  const carros=todosCarros;
+  const disp=carros.filter(c=>!c.vendido);
+  // Por marca
+  const porMarca={};disp.forEach(c=>{porMarca[c.marca]=(porMarca[c.marca]||0)+1});
+  const marcaTop=Object.entries(porMarca).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  // Por tipo
+  const porTipo={};disp.forEach(c=>{if(c.tipo)porTipo[c.tipo]=(porTipo[c.tipo]||0)+1});
+  const tipoTop=Object.entries(porTipo).sort((a,b)=>b[1]-a[1]);
+  // Mais visualizados
+  const maisVistos=[...carros].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5);
+  // Vendas
+  const vendidos=carros.filter(c=>c.vendido);
+  const ticketMedio=vendidos.length?Math.round(vendidos.reduce((a,c)=>a+Number(c.preco||0),0)/vendidos.length):0;
+
+  document.getElementById('relatorioGrid').innerHTML=`
+  <div class="rel-card">
+    <div class="rel-title">Por Marca</div>
+    <div class="rel-list">${marcaTop.map(([m,n])=>`<div class="rel-item"><span>${m}</span><span class="val">${n} veíc.</span></div>`).join('')||'<p style="color:var(--silver);font-size:13px">Sem dados</p>'}</div>
+  </div>
+  <div class="rel-card">
+    <div class="rel-title">Por Tipo</div>
+    <div class="rel-list">${tipoTop.map(([t,n])=>`<div class="rel-item"><span>${t}</span><span class="val">${n}</span></div>`).join('')||'<p style="color:var(--silver);font-size:13px">Sem dados</p>'}</div>
+  </div>
+  <div class="rel-card">
+    <div class="rel-title">Mais Visualizados</div>
+    <div class="rel-list">${maisVistos.filter(c=>c.views).map(c=>`<div class="rel-item"><span>${c.marca} ${c.modelo}</span><span class="val">👁 ${c.views}</span></div>`).join('')||'<p style="color:var(--silver);font-size:13px">Nenhuma visualização ainda</p>'}</div>
+  </div>
+  <div class="rel-card">
+    <div class="rel-title">Resumo de Vendas</div>
+    <div class="rel-list">
+      <div class="rel-item"><span>Total vendidos</span><span class="val">${vendidos.length}</span></div>
+      <div class="rel-item"><span>Ticket médio</span><span class="val" style="color:var(--green)">R$ ${ticketMedio.toLocaleString('pt-BR')}</span></div>
+      <div class="rel-item"><span>Valor em estoque</span><span class="val" style="color:var(--red2)">R$ ${Math.round(disp.reduce((a,c)=>a+Number(c.preco||0),0)/1000)}k</span></div>
+      <div class="rel-item"><span>Reservados</span><span class="val" style="color:var(--yellow)">${carros.filter(c=>c.reservado&&!c.vendido).length}</span></div>
+    </div>
+  </div>`;
+}
+
+// EXPORT PDF
+function exportarPDF(){
+  const carros=todosCarros.filter(c=>!c.vendido);
+  let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Catálogo Maradona's Car</title>
+  <style>body{font-family:Arial,sans-serif;padding:2rem;color:#111}h1{color:#D0401A;margin-bottom:.25rem}
+  .sub{color:#777;font-size:13px;margin-bottom:2rem}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .card{border:1px solid #ddd;padding:1rem;break-inside:avoid}.card h3{font-size:16px;margin:.5rem 0 .25rem}
+  .brand{font-size:11px;color:#D0401A;text-transform:uppercase;letter-spacing:1px}
+  .specs{font-size:12px;color:#666;margin:.5rem 0}.price{font-size:22px;font-weight:900;color:#D0401A}
+  .img{width:100%;height:120px;object-fit:cover;margin-bottom:.5rem;background:#f0f0f0}
+  @media print{.grid{display:grid;grid-template-columns:repeat(3,1fr)}}
+  </style></head><body>
+  <h1>Maradona's Car</h1><div class="sub">Estoque em ${new Date().toLocaleDateString('pt-BR')} · ${carros.length} veículos disponíveis</div>
+  <div class="grid">${carros.map(c=>{
+    const f=c.fotos&&c.fotos[0]?c.fotos[0]:(c.foto||'');
+    return `<div class="card">${f?`<img class="img" src="${f}">`:'<div class="img" style="display:flex;align-items:center;justify-content:center;font-size:40px">🚗</div>'}
+    <div class="brand">${c.marca}</div><h3>${c.modelo} ${c.ano}</h3>
+    <div class="specs">${c.km?Number(c.km).toLocaleString('pt-BR')+' km · ':''} ${c.motor||''} ${c.cambio?'· '+c.cambio:''}</div>
+    <div class="price">R$ ${Number(c.preco).toLocaleString('pt-BR')}</div>
+    </div>`;}).join('')}</div>
+  <script>window.print()<\/script></body></html>`;
+  const w=window.open('','_blank');w.document.write(html);w.document.close();
+}
+
+// SENHA
+function alterarSenha(){
+  const u=document.getElementById('sUser').value.trim();
+  const atual=document.getElementById('sSenhaAtual').value;
+  const nova=document.getElementById('sNovaSenha').value;
+  const conf=document.getElementById('sConfSenha').value;
+  const creds=getCreds();
+  if(!u||!atual||!nova||!conf){showToast('Preencha todos os campos.');return}
+  if(!creds[u]||creds[u]!==atual){showToast('Usuário ou senha atual incorretos.');return}
+  if(nova.length<6){showToast('Nova senha: mínimo 6 caracteres.');return}
+  if(nova!==conf){showToast('As senhas não coincidem.');return}
+  const newCreds={...creds};newCreds[u]=nova;saveCreds(newCreds);
+  showToast('Senha alterada! Fazendo logout...','success');
+  setTimeout(()=>sair(),2000);
+}
+
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.className='toast'+(type?' '+type:'');t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+if(sessionStorage.getItem('mcAdmin')){carregarTudo()}
+</script>
+</body>
+</html>

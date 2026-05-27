@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maradona's Car – Multimarcas em Belo Horizonte</title>
+<meta name="description" content="A Maradona's Car é uma multimarcas em BH com mais de 200 veículos. Compra, venda, troca, consignação e financiamento em até 24h.">
+<meta property="og:title" content="Maradona's Car – Multimarcas em BH">
+<meta property="og:description" content="Mais de 200 veículos selecionados. Financiamento em até 24h.">
+<meta property="og:image" content="logo.jpg">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#D0401A;--red2:#e8521f;--bg:#0f0f0f;--bg2:#161616;--bg3:#1f1f1f;--silver:#a0a0a0;--white:#fff;--border:rgba(255,255,255,0.08)}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
+body.light{--bg:#f5f5f0;--bg2:#eaeae5;--bg3:#e0e0db;--silver:#555;--white:#111;--border:rgba(0,0,0,0.1)}
+nav{position:fixed;top:0;width:100%;z-index:200;background:rgba(15,15,15,0.97);border-bottom:1px solid rgba(208,64,26,0.3);backdrop-filter:blur(12px)}
+body.light nav{background:rgba(245,245,240,0.97)}
+.nav-inner{max-width:1300px;margin:0 auto;padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:46px;object-fit:contain}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--red2)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.theme-btn{background:none;border:1px solid var(--border);color:var(--silver);padding:8px 10px;cursor:pointer;font-size:16px;transition:all .2s;line-height:1}
+.theme-btn:hover{border-color:var(--red2)}
+.nav-cta{background:var(--red);color:#fff;padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-block}
+.nav-cta:hover{background:var(--red2)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white)}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--bg2);z-index:199;padding:2rem;border-bottom:1px solid var(--border)}
+.mobile-menu.open{display:flex;flex-direction:column;gap:1.5rem}
+.mobile-menu a{font-size:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--silver);text-decoration:none}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--bg)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(208,64,26,0.08) 0%, transparent 70%)}
+.hero-inner{max-width:1300px;margin:0 auto;padding:120px 2rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;width:100%}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red2);margin-bottom:1.5rem}
+.hero-eyebrow::before{content:'';width:32px;height:2px;background:var(--red2)}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(52px,8vw,96px);font-weight:900;line-height:.92;letter-spacing:-1px;text-transform:uppercase;margin-bottom:1.5rem}
+h1 span{color:var(--red2)}
+.hero-sub{font-size:17px;font-weight:300;color:var(--silver);line-height:1.8;max-width:440px;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--red);color:#fff;padding:15px 36px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:var(--red2)}
+.btn-outline{background:transparent;color:var(--white);padding:15px 36px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block}
+.btn-outline:hover{border-color:var(--white)}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:3rem;border-top:1px solid var(--border);padding-top:2.5rem}
+.stat .num{font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:900}
+.stat .num em{color:var(--red2);font-style:normal}
+.stat .lbl{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);margin-top:4px}
+.hero-car-box{width:100%;aspect-ratio:4/3;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.strip{background:var(--red);padding:12px 0;overflow:hidden;white-space:nowrap}
+.strip-inner{display:flex;gap:3rem;animation:sc 20s linear infinite}
+.strip-item{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.strip-item::before{content:'✦'}
+@keyframes sc{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.section{padding:6rem 2rem}
+.section-inner{max-width:1300px;margin:0 auto}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red2);margin-bottom:1rem}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--red2)}
+h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(34px,5vw,60px);font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-0.5px}
+/* COMPARADOR */
+.compare-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid rgba(208,64,26,.4);padding:1rem 2rem;z-index:150;transform:translateY(100%);transition:transform .3s;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.compare-bar.visible{transform:translateY(0)}
+.compare-slots{display:flex;gap:.75rem;flex:1;flex-wrap:wrap}
+.compare-slot{background:var(--bg3);border:1px solid var(--border);padding:.5rem 1rem;font-size:13px;font-weight:600;display:flex;align-items:center;gap:.5rem;white-space:nowrap}
+.compare-slot button{background:none;border:none;color:var(--red2);cursor:pointer;font-size:16px;line-height:1}
+.btn-compare-go{background:var(--red);color:#fff;border:none;padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.btn-compare-clear{background:transparent;color:var(--silver);border:1px solid var(--border);padding:10px 16px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+/* CARDS */
+.cars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px}
+.car-card{background:var(--bg3);overflow:hidden;cursor:pointer;transition:transform .25s;position:relative}
+.car-card:hover{transform:translateY(-6px)}
+.card-badge{position:absolute;top:14px;left:14px;z-index:2;background:var(--red);color:#fff;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.card-badge.vendido{background:#374151}
+.card-badge.reservado{background:#d97706}
+.card-img{width:100%;height:210px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.car-card:hover .card-img img{transform:scale(1.04)}
+.card-overlay{position:absolute;inset:0;background:rgba(208,64,26,.1);opacity:0;transition:opacity .2s}
+.car-card:hover .card-overlay{opacity:1}
+.compare-chk{position:absolute;top:14px;right:14px;z-index:3;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 8px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.compare-chk.selected{background:var(--red);border-color:var(--red)}
+.card-body{padding:1.25rem}
+.card-brand{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red2);margin-bottom:4px}
+.card-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:.75rem}
+.card-specs{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem}
+.spec{font-size:12px;color:var(--silver)}
+.card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border)}
+.price{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900}
+.price small{font-size:14px;font-weight:400;color:var(--silver)}
+.views-count{font-size:11px;color:var(--silver);display:flex;align-items:center;gap:4px}
+/* DEPOIMENTOS */
+.dep-section{background:var(--bg2);padding:6rem 2rem}
+.dep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px;margin-top:3rem}
+.dep-card{background:var(--bg3);padding:2rem}
+.dep-stars{color:var(--red2);font-size:18px;letter-spacing:3px;margin-bottom:1rem}
+.dep-text{font-size:15px;font-weight:300;color:rgba(128,128,128,1);line-height:1.8;margin-bottom:1.5rem;font-style:italic}
+.dep-author{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.dep-car{font-size:12px;color:var(--red2);margin-top:3px}
+.dep-avatar{width:44px;height:44px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;margin-bottom:1rem;color:#fff}
+.porque-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px;margin-top:3rem}
+.porque-card{background:var(--bg3);padding:2.5rem}
+.porque-card.destaque{background:var(--red)}
+.p-icon{font-size:36px;margin-bottom:1.25rem}
+.p-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:.75rem}
+.p-text{font-size:15px;font-weight:300;color:rgba(255,255,255,.7);line-height:1.8}
+.porque-card.destaque .p-text{color:rgba(255,255,255,.85)}
+.marcas-grid{display:flex;gap:1px;flex-wrap:wrap;justify-content:center;margin-top:2.5rem}
+.marca-box{background:var(--bg3);padding:1.25rem 2rem;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);transition:all .2s}
+.marca-box:hover{background:var(--red);color:#fff}
+.contato-strip{background:var(--red);padding:4rem 2rem}
+.contato-strip-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.c-icon{width:42px;height:42px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.contact-item{display:flex;align-items:center;gap:14px;font-size:16px;font-weight:500}
+footer{background:#0a0a0a;padding:3rem 2rem;border-top:1px solid rgba(208,64,26,.25)}
+.foot-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.foot-logo img{height:40px;object-fit:contain}
+.foot-links{display:flex;gap:2rem;flex-wrap:wrap}
+.foot-links a{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--red2)}
+.foot-bottom{max-width:1300px;margin:1.5rem auto 0;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:rgba(160,160,160,.5);flex-wrap:wrap;gap:.5rem}
+.empty-state{text-align:center;padding:4rem;color:var(--silver);grid-column:1/-1}
+.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4,#252525) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-card{height:340px}
+/* MODAL COMPARADOR */
+.modal-compare{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;display:none;overflow-y:auto;padding:2rem}
+.modal-compare.open{display:block}
+.compare-inner{max-width:1100px;margin:0 auto;background:var(--bg2);padding:2rem;position:relative}
+.compare-close{position:absolute;top:1rem;right:1rem;background:var(--red);color:#fff;border:none;width:36px;height:36px;font-size:18px;cursor:pointer}
+.compare-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+.compare-table th{background:var(--bg3);padding:1rem;text-align:left;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver)}
+.compare-table td{padding:1rem;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
+.compare-table tr:hover td{background:rgba(255,255,255,.02)}
+.compare-table .label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--silver);width:140px}
+.compare-foto{width:100%;height:160px;object-fit:cover;margin-bottom:.75rem}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}.hero-car-box{display:none}.hero-stats{grid-template-columns:repeat(2,1fr)}.porque-grid{grid-template-columns:1fr}.contato-strip-inner{grid-template-columns:1fr}.nav-links,.nav-cta{display:none}.hamburger{display:flex}}
+@media(max-width:600px){.section{padding:4rem 1.25rem}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Maradona's Car"></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Início</a></li>
+      <li><a href="estoque.html">Estoque</a></li>
+      <li><a href="financiamento.html">Financiamento</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()" title="Alternar tema" id="themeBtn">🌙</button>
+      <a href="contato.html" class="nav-cta">Fale Conosco</a>
+      <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+  <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+</div>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Multimarcas · Belo Horizonte</div>
+      <h1>Compra<br><span>Venda</span><br>Troca</h1>
+      <p class="hero-sub">Veículos selecionados com procedência garantida. Financiamento aprovado em até 24h.</p>
+      <div class="hero-btns">
+        <a href="estoque.html" class="btn-primary">Ver Estoque</a>
+        <a href="financiamento.html" class="btn-outline">Simular Financiamento</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="num" id="totalCarros">–</div><div class="lbl">Veículos</div></div>
+        <div class="stat"><div class="num">15<em>k</em></div><div class="lbl">Clientes</div></div>
+        <div class="stat"><div class="num">16<em>+</em></div><div class="lbl">Anos</div></div>
+        <div class="stat"><div class="num">98<em>%</em></div><div class="lbl">Aprovação</div></div>
+      </div>
+    </div>
+    <div class="hero-car-box"><div style="font-size:120px">🚗</div></div>
+  </div>
+</section>
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-item">Compra</div><div class="strip-item">Venda</div><div class="strip-item">Troca</div><div class="strip-item">Consignação</div><div class="strip-item">Financiamento</div><div class="strip-item">Garantia</div><div class="strip-item">Laudo Cautelar</div>
+    <div class="strip-item">Compra</div><div class="strip-item">Venda</div><div class="strip-item">Troca</div><div class="strip-item">Consignação</div><div class="strip-item">Financiamento</div><div class="strip-item">Garantia</div><div class="strip-item">Laudo Cautelar</div>
+  </div>
+</div>
+<section class="section" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:3rem">
+      <div><div class="eyebrow">Destaques</div><h2>Veículos<br>em Destaque</h2></div>
+      <a href="estoque.html" class="btn-outline" style="border-color:rgba(255,255,255,.2)">Ver Todo Estoque</a>
+    </div>
+    <div class="cars-grid" id="destaquesGrid">
+      <div class="skeleton skel-card"></div>
+      <div class="skeleton skel-card"></div>
+      <div class="skeleton skel-card"></div>
+    </div>
+  </div>
+</section>
+<section class="section" style="background:var(--bg)">
+  <div class="section-inner">
+    <div style="margin-bottom:3rem"><div class="eyebrow">Por que a Maradona's Car</div><h2>Confiança em<br>Cada Negócio</h2></div>
+    <div class="porque-grid">
+      <div class="porque-card destaque"><div class="p-icon">🏆</div><div class="p-title">Referência na Região</div><p class="p-text">Mais de 16 anos construindo reputação carro a carro. Referência em BH quando o assunto é negócio seguro.</p></div>
+      <div class="porque-card"><div class="p-icon">🔍</div><div class="p-title">Laudo Cautelar Incluso</div><p class="p-text">Todo veículo passa por inspeção rigorosa com laudo completo. Transparência total na negociação.</p></div>
+      <div class="porque-card"><div class="p-icon">💳</div><div class="p-title">Financiamento em 24h</div><p class="p-text">Maiores bancos do Brasil. Aprovação rápida, parcelas que cabem no bolso, condições especiais para negativados.</p></div>
+      <div class="porque-card"><div class="p-icon">🔄</div><div class="p-title">Aceita Troca</div><p class="p-text">Avaliamos seu veículo com o melhor preço do mercado. Use como entrada e realize o sonho mais rápido.</p></div>
+    </div>
+  </div>
+</section>
+<div class="dep-section">
+  <div class="section-inner">
+    <div style="margin-bottom:0"><div class="eyebrow">Depoimentos</div><h2>O que nossos<br>clientes dizem</h2></div>
+    <div class="dep-grid">
+      <div class="dep-card"><div class="dep-avatar">MO</div><div class="dep-stars">★★★★★</div><p class="dep-text">"Atendimento impecável! Saí de carro no mesmo dia, financiamento aprovado em horas. Recomendo de olhos fechados!"</p><div class="dep-author">Marcos Oliveira</div><div class="dep-car">Volkswagen Polo 2023</div></div>
+      <div class="dep-card"><div class="dep-avatar">AC</div><div class="dep-stars">★★★★★</div><p class="dep-text">"Consultores pacientes e honestos. Me ajudaram a fazer a melhor escolha sem pressão nenhuma. Excelente!"</p><div class="dep-author">Ana Paula Costa</div><div class="dep-car">Chevrolet Tracker 2022</div></div>
+      <div class="dep-card"><div class="dep-avatar">RM</div><div class="dep-stars">★★★★★</div><p class="dep-text">"Estava negativado e achei que não ia conseguir. A equipe batalhou pelo meu crédito e saí com o HB20!"</p><div class="dep-author">Rafael Mendes</div><div class="dep-car">Hyundai HB20 2023</div></div>
+      <div class="dep-card"><div class="dep-avatar">JS</div><div class="dep-stars">★★★★★</div><p class="dep-text">"Comprei meu segundo carro aqui. A transparência e facilidade no processo me conquistaram de vez."</p><div class="dep-author">Juliana Santos</div><div class="dep-car">Fiat Pulse 2023</div></div>
+      <div class="dep-card"><div class="dep-avatar">PL</div><div class="dep-stars">★★★★★</div><p class="dep-text">"Meu carro foi avaliado na hora com valor justo. Em duas horas estava com as chaves do Corolla nas mãos!"</p><div class="dep-author">Pedro Lima</div><div class="dep-car">Toyota Corolla 2021</div></div>
+      <div class="dep-card"><div class="dep-avatar">CF</div><div class="dep-stars">★★★★★</div><p class="dep-text">"Toda a documentação feita por eles, sem burocracia. Saí com tudo regularizado e garantia de 6 meses."</p><div class="dep-author">Carla Ferreira</div><div class="dep-car">Renault Kwid 2023</div></div>
+    </div>
+  </div>
+</div>
+<div style="background:var(--bg2);padding:4rem 2rem">
+  <div class="section-inner" style="text-align:center">
+    <div class="eyebrow" style="justify-content:center">Marcas</div>
+    <h2>Trabalhamos com todas as marcas</h2>
+    <div class="marcas-grid">
+      <div class="marca-box">Volkswagen</div><div class="marca-box">Chevrolet</div><div class="marca-box">Fiat</div>
+      <div class="marca-box">Hyundai</div><div class="marca-box">Toyota</div><div class="marca-box">Honda</div>
+      <div class="marca-box">Ford</div><div class="marca-box">Jeep</div><div class="marca-box">Renault</div>
+      <div class="marca-box">Mitsubishi</div><div class="marca-box">Nissan</div><div class="marca-box">Kia</div>
+    </div>
+  </div>
+</div>
+<div class="contato-strip">
+  <div class="contato-strip-inner">
+    <div><h2 style="font-size:clamp(32px,5vw,56px);margin-bottom:.75rem">Venha nos<br>Visitar Hoje</h2><p style="font-size:16px;color:rgba(255,255,255,.8);line-height:1.7">Nossa equipe está pronta para te atender.</p><br><a href="contato.html" class="btn-outline" style="border-color:rgba(255,255,255,.5);color:#fff">Como Chegar</a></div>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div class="contact-item"><div class="c-icon">📍</div><span>Av. Contorno, 4521 – BH/MG</span></div>
+      <div class="contact-item"><div class="c-icon">📞</div><span>(31) 3333-4444</span></div>
+      <div class="contact-item"><div class="c-icon">💬</div><span>(31) 9 9999-5555 (WhatsApp)</span></div>
+      <div class="contact-item"><div class="c-icon">🕐</div><span>Seg–Sex 8h–18h · Sáb 8h–14h</span></div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="foot-inner">
+    <div class="foot-logo"><img src="logo.jpg" alt="Maradona's Car"></div>
+    <div class="foot-links">
+      <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+      <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2025 Maradona's Car. Todos os direitos reservados.</span>
+    <span>CNPJ: 00.000.000/0001-00 · DETRAN-MG 00000</span>
+  </div>
+</footer>
+<!-- BARRA COMPARADOR -->
+<div class="compare-bar" id="compareBar">
+  <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--silver);flex-shrink:0">Comparar:</div>
+  <div class="compare-slots" id="compareSlots"></div>
+  <button class="btn-compare-go" onclick="abrirComparador()">Comparar agora</button>
+  <button class="btn-compare-clear" onclick="limparComparador()">Limpar</button>
+</div>
+<!-- MODAL COMPARADOR -->
+<div class="modal-compare" id="modalCompare">
+  <div class="compare-inner">
+    <button class="compare-close" onclick="fecharComparador()">✕</button>
+    <div class="eyebrow">Comparador</div>
+    <h2>Comparação de Veículos</h2>
+    <div style="overflow-x:auto"><table class="compare-table" id="compareTable"></table></div>
+  </div>
+</div>
+<!-- Firebase + Scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="db.js"></script>
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+
+// TEMA
+function toggleTheme(){
+  const light=document.body.classList.toggle('light');
+  localStorage.setItem('mc_theme',light?'light':'dark');
+  document.getElementById('themeBtn').textContent=light?'☀️':'🌙';
+}
+(function(){
+  if(localStorage.getItem('mc_theme')==='light'){
+    document.body.classList.add('light');
+    document.getElementById('themeBtn').textContent='☀️';
+  }
+})();
+
+// COMPARADOR
+let comparar=[];
+function toggleComparar(id,nome,e){
+  e.stopPropagation();
+  const btn=e.currentTarget;
+  if(comparar.find(c=>c.id===id)){
+    comparar=comparar.filter(c=>c.id!==id);
+    btn.classList.remove('selected');btn.textContent='+ Comparar';
+  } else {
+    if(comparar.length>=3){alert('Máximo 3 veículos para comparar.');return}
+    comparar.push({id,nome});
+    btn.classList.add('selected');btn.textContent='✓ Comparar';
+  }
+  renderCompareBar();
+}
+function renderCompareBar(){
+  const bar=document.getElementById('compareBar');
+  const slots=document.getElementById('compareSlots');
+  if(!comparar.length){bar.classList.remove('visible');return}
+  bar.classList.add('visible');
+  slots.innerHTML=comparar.map(c=>`<div class="compare-slot">${c.nome}<button onclick="removerComparar('${c.id}')">✕</button></div>`).join('');
+}
+function removerComparar(id){
+  comparar=comparar.filter(c=>c.id!==id);
+  document.querySelectorAll('.compare-chk').forEach(btn=>{if(btn.dataset.id===id){btn.classList.remove('selected');btn.textContent='+ Comparar'}});
+  renderCompareBar();
+}
+function limparComparador(){
+  comparar=[];
+  document.querySelectorAll('.compare-chk').forEach(b=>{b.classList.remove('selected');b.textContent='+ Comparar'});
+  renderCompareBar();
+}
+async function abrirComparador(){
+  if(comparar.length<2){alert('Selecione ao menos 2 veículos.');return}
+  const todos=await dbGetCarros();
+  const selecionados=comparar.map(c=>todos.find(t=>t.id===c.id)).filter(Boolean);
+  const campos=[
+    {l:'Foto',k:'foto'},
+    {l:'Preço',k:'preco'},
+    {l:'Ano',k:'ano'},
+    {l:'Quilometragem',k:'km'},
+    {l:'Motor',k:'motor'},
+    {l:'Câmbio',k:'cambio'},
+    {l:'Tipo',k:'tipo'},
+    {l:'Cor',k:'cor'},
+    {l:'Visualizações',k:'views'},
+  ];
+  const hdr='<tr><th>Característica</th>'+selecionados.map(c=>`<th>${c.marca} ${c.modelo} ${c.ano}</th>`).join('')+'</tr>';
+  const rows=campos.map(({l,k})=>{
+    const cells=selecionados.map(c=>{
+      if(k==='foto'){const f=c.fotos&&c.fotos[0]?c.fotos[0]:(c.foto||'');return `<td>${f?`<img class="compare-foto" src="${f}">`:'🚗'}</td>`}
+      if(k==='preco')return `<td style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--red2)">R$ ${Number(c[k]||0).toLocaleString('pt-BR')}</td>`;
+      if(k==='km')return `<td>${c[k]?Number(c[k]).toLocaleString('pt-BR')+' km':'–'}</td>`;
+      return `<td>${c[k]||'–'}</td>`;
+    }).join('');
+    return `<tr><td class="label">${l}</td>${cells}</tr>`;
+  }).join('');
+  document.getElementById('compareTable').innerHTML=hdr+rows;
+  document.getElementById('modalCompare').classList.add('open');
+}
+function fecharComparador(){document.getElementById('modalCompare').classList.remove('open')}
+
+// DESTAQUES
+async function loadDestaques(){
+  const carros=await dbGetCarros();
+  document.getElementById('totalCarros').innerHTML=carros.length+'<em>+</em>';
+  const grid=document.getElementById('destaquesGrid');
+  const dest=carros.filter(c=>c.destaque&&!c.vendido).slice(0,3);
+  const show=dest.length?dest:carros.filter(c=>!c.vendido).slice(0,3);
+  if(!show.length){grid.innerHTML='<div class="empty-state"><div style="font-size:48px">🚗</div><p>Cadastre veículos no <a href="admin.html" style="color:var(--red2)">painel admin</a></p></div>';return}
+  grid.innerHTML=show.map(c=>{
+    const f=c.fotos&&c.fotos[0]?c.fotos[0]:(c.foto||'');
+    return `<div class="car-card" onclick="location.href='carro.html?id=${c.id}'">
+      ${c.destaque?'<div class="card-badge">Destaque</div>':''}
+      <button class="compare-chk" data-id="${c.id}" onclick="toggleComparar('${c.id}','${c.marca} ${c.modelo}',event)">+ Comparar</button>
+      <div class="card-img">${f?`<img src="${f}" loading="lazy">`:'<div>🚗</div>'}<div class="card-overlay"></div></div>
+      <div class="card-body">
+        <div class="card-brand">${c.marca}</div>
+        <div class="card-name">${c.modelo}</div>
+        <div class="card-specs">
+          <div class="spec">📅 ${c.ano}</div>
+          ${c.motor?`<div class="spec">⚡ ${c.motor}</div>`:''}
+          ${c.km?`<div class="spec">⏱ ${Number(c.km).toLocaleString('pt-BR')} km</div>`:''}
+        </div>
+        <div class="card-footer">
+          <div class="price"><small>R$</small> ${Number(c.preco).toLocaleString('pt-BR')}</div>
+          ${c.views?`<div class="views-count">👁 ${c.views}</div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+loadDestaques();
+</script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Instalação – Maradona's Car</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#D0401A;--bg:#0f0f0f;--bg2:#161616;--bg3:#1f1f1f;--silver:#a0a0a0;--white:#fff;--border:rgba(255,255,255,0.08);--green:#22c55e}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--white);line-height:1.7;max-width:900px;margin:0 auto;padding:3rem 2rem}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:56px;font-weight:900;text-transform:uppercase;line-height:.92;margin-bottom:.5rem}
+h1 span{color:var(--red)}
+.subtitle{font-size:16px;color:var(--silver);margin-bottom:3rem}
+h2{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;margin:2.5rem 0 1rem;display:flex;align-items:center;gap:.75rem}
+h2 .num{background:var(--red);color:#fff;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0}
+p{margin-bottom:.75rem;color:rgba(255,255,255,.85)}
+.box{background:var(--bg3);border:1px solid var(--border);padding:1.5rem;margin:1rem 0;border-radius:0}
+.box.green{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.05)}
+.box.red{border-color:rgba(208,64,26,.3);background:rgba(208,64,26,.05)}
+.box.yellow{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.05)}
+code{background:rgba(255,255,255,.1);padding:2px 8px;font-family:monospace;font-size:14px;color:#fbbf24}
+pre{background:#0a0a0a;border:1px solid var(--border);padding:1.25rem;overflow-x:auto;font-family:monospace;font-size:14px;line-height:1.6;margin:1rem 0;color:#fbbf24}
+ul,ol{padding-left:1.5rem;margin:.75rem 0}
+li{margin-bottom:.5rem;color:rgba(255,255,255,.85)}
+.step-img{background:var(--bg2);border:1px solid var(--border);padding:1rem;text-align:center;font-size:13px;color:var(--silver);margin:.75rem 0}
+.tag{display:inline-block;background:var(--green);color:#111;padding:2px 8px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:.5rem}
+.tag.red{background:var(--red);color:#fff}
+.tag.yellow{background:#d97706;color:#fff}
+a{color:var(--red);text-decoration:none}
+a:hover{text-decoration:underline}
+.divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+.files-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;margin:1rem 0}
+.file-item{background:var(--bg3);padding:1rem}
+.file-name{font-family:monospace;font-size:14px;color:#fbbf24;margin-bottom:.25rem}
+.file-desc{font-size:12px;color:var(--silver)}
+.highlight{color:var(--red);font-weight:600}
+</style>
+</head>
+<body>
+
+<h1>Guia de <span>Instalação</span><br>Maradona's Car</h1>
+<p class="subtitle">Siga este guia para colocar seu site no ar com banco de dados Firebase. Tempo estimado: 20 minutos.</p>
+
+<hr class="divider">
+
+<h2><span class="num">📁</span> Estrutura do Site</h2>
+<p>Seu site é composto pelos seguintes arquivos:</p>
+<div class="files-grid">
+  <div class="file-item"><div class="file-name">index.html</div><div class="file-desc">Página inicial</div></div>
+  <div class="file-item"><div class="file-name">estoque.html</div><div class="file-desc">Catálogo de veículos</div></div>
+  <div class="file-item"><div class="file-name">carro.html</div><div class="file-desc">Página individual do veículo</div></div>
+  <div class="file-item"><div class="file-name">financiamento.html</div><div class="file-desc">Simulador de financiamento</div></div>
+  <div class="file-item"><div class="file-name">contato.html</div><div class="file-desc">Página de contato</div></div>
+  <div class="file-item"><div class="file-name">admin.html</div><div class="file-desc">Painel administrativo</div></div>
+  <div class="file-item"><div class="file-name">firebase-config.js</div><div class="file-desc">⚠️ Configurar Firebase</div></div>
+  <div class="file-item"><div class="file-name">db.js</div><div class="file-desc">Camada de dados</div></div>
+  <div class="file-item"><div class="file-name">logo.jpg</div><div class="file-desc">Logo da empresa</div></div>
+</div>
+
+<div class="box yellow">
+  ⚠️ <strong>Importante:</strong> O arquivo <code>firebase-config.js</code> precisa ser configurado antes de hospedar. Siga os passos abaixo.
+</div>
+
+<hr class="divider">
+
+<h2><span class="num">1</span> Criar Conta no Firebase <span class="tag">Gratuito</span></h2>
+
+<ol>
+  <li>Acesse <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a></li>
+  <li>Faça login com sua conta Google (Gmail)</li>
+  <li>Clique em <strong>"Criar um projeto"</strong></li>
+  <li>Digite o nome: <code>maradonas-car</code></li>
+  <li>Desative o Google Analytics (não é necessário) → clique <strong>"Criar projeto"</strong></li>
+  <li>Aguarde a criação (cerca de 30 segundos)</li>
+</ol>
+
+<div class="box green">
+  ✅ O plano <strong>Spark (Gratuito)</strong> do Firebase inclui: 1GB de banco de dados, 5GB de armazenamento de fotos, 10GB de transferência/mês. Mais que suficiente para uma revenda de carros!
+</div>
+
+<hr class="divider">
+
+<h2><span class="num">2</span> Ativar o Firestore (Banco de Dados)</h2>
+
+<ol>
+  <li>No painel do seu projeto, clique em <strong>"Firestore Database"</strong> no menu lateral</li>
+  <li>Clique em <strong>"Criar banco de dados"</strong></li>
+  <li>Selecione <strong>"Iniciar no modo de produção"</strong></li>
+  <li>Escolha o local: <strong>"southamerica-east1"</strong> (São Paulo – mais rápido para o Brasil)</li>
+  <li>Clique em <strong>"Concluído"</strong></li>
+</ol>
+
+<p>Agora configure as regras de segurança. Clique na aba <strong>"Regras"</strong> e cole o código abaixo:</p>
+<pre>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Qualquer pessoa pode LER os carros (visitantes do site)
+    match /carros/{carroId} {
+      allow read: if true;
+      allow write: if false; // apenas via Admin SDK (seguro)
+    }
+  }
+}</pre>
+<p>Clique em <strong>"Publicar"</strong>.</p>
+
+<div class="box yellow">
+  ⚠️ <strong>Nota:</strong> Com esta configuração, visitantes só podem ver os carros, nunca alterar. O admin usa autenticação separada pelo painel.
+</div>
+
+<hr class="divider">
+
+<h2><span class="num">3</span> Ativar o Storage (Armazenamento de Fotos)</h2>
+
+<ol>
+  <li>No menu lateral, clique em <strong>"Storage"</strong></li>
+  <li>Clique em <strong>"Começar"</strong></li>
+  <li>Aceite as regras padrão → clique <strong>"Avançar"</strong></li>
+  <li>Escolha o local: <strong>"southamerica-east1"</strong> → <strong>"Concluído"</strong></li>
+</ol>
+
+<hr class="divider">
+
+<h2><span class="num">4</span> Obter as Credenciais do Firebase</h2>
+
+<ol>
+  <li>Clique no ícone de engrenagem ⚙️ → <strong>"Configurações do projeto"</strong></li>
+  <li>Role até a seção <strong>"Seus aplicativos"</strong></li>
+  <li>Clique no ícone <strong>&lt;/&gt;</strong> (Web)</li>
+  <li>Digite o nome do app: <code>maradonas-car-web</code></li>
+  <li>NÃO marque "Firebase Hosting" por enquanto</li>
+  <li>Clique em <strong>"Registrar app"</strong></li>
+  <li>Você verá um bloco de código assim:</li>
+</ol>
+
+<pre>const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "maradonas-car.firebaseapp.com",
+  projectId: "maradonas-car",
+  storageBucket: "maradonas-car.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc123"
+};</pre>
+
+<div class="box red">
+  🔑 <strong>Copie esses valores!</strong> Você vai precisar deles no próximo passo.
+</div>
+
+<hr class="divider">
+
+<h2><span class="num">5</span> Configurar o Arquivo firebase-config.js</h2>
+
+<p>Abra o arquivo <code>firebase-config.js</code> com o Bloco de Notas (clique direito → Abrir com → Bloco de notas).</p>
+<p>Substitua os valores de exemplo pelos valores reais que você copiou:</p>
+
+<pre>const FIREBASE_CONFIG = {
+  apiKey: "COLE_AQUI_SUA_apiKey",
+  authDomain: "COLE_AQUI_SEU_authDomain",
+  projectId: "COLE_AQUI_SEU_projectId",
+  storageBucket: "COLE_AQUI_SEU_storageBucket",
+  messagingSenderId: "COLE_AQUI_SEU_messagingSenderId",
+  appId: "COLE_AQUI_SEU_appId"
+};
+
+// Número de WhatsApp (com código do país, sem espaços ou símbolos)
+const WHATSAPP_NUMBER = "5531999995555"; // ← Altere para o número real!
+
+const STORE_NAME = "Maradona's Car";</pre>
+
+<p>Salve o arquivo.</p>
+
+<hr class="divider">
+
+<h2><span class="num">6</span> Hospedar no Vercel <span class="tag">Gratuito</span></h2>
+
+<ol>
+  <li>Acesse <a href="https://vercel.com" target="_blank">vercel.com</a> e crie uma conta gratuita</li>
+  <li>Clique em <strong>"Add New Project"</strong></li>
+  <li>Selecione <strong>"Browse"</strong> e escolha a <strong>pasta descompactada</strong> do site (não o .zip)</li>
+  <li>Clique em <strong>"Deploy"</strong></li>
+  <li>Aguarde 1-2 minutos → seu site estará no ar!</li>
+</ol>
+
+<div class="box green">
+  ✅ O Vercel gera um link automático tipo <code>maradonas-car.vercel.app</code>. Você pode usar esse link ou conectar um domínio próprio.
+</div>
+
+<hr class="divider">
+
+<h2><span class="num">7</span> Conectar Domínio Próprio (Opcional)</h2>
+
+<p>Para usar <code>www.maradonascar.com.br</code>:</p>
+<ol>
+  <li>Registre o domínio em <a href="https://registro.br" target="_blank">registro.br</a> (~R$ 40/ano)</li>
+  <li>No Vercel, vá em <strong>Settings → Domains</strong></li>
+  <li>Digite seu domínio e siga as instruções para apontar o DNS</li>
+  <li>Em 24h o site estará no seu domínio</li>
+</ol>
+
+<hr class="divider">
+
+<h2><span class="num">8</span> Acessar o Painel Admin</h2>
+
+<p>O painel admin está em: <code>seusite.vercel.app/admin.html</code></p>
+<div class="box">
+  <strong>Credenciais padrão:</strong><br>
+  Usuário: <code>admin</code><br>
+  Senha: <code>maradona2025</code><br><br>
+  ⚠️ <strong>Troque a senha imediatamente</strong> após o primeiro acesso! Use a aba "🔐 Senha" no painel.
+</div>
+
+<hr class="divider">
+
+<h2><span class="num">✨</span> Funcionalidades do Site</h2>
+
+<ul>
+  <li>🚗 <strong>Cadastro de veículos</strong> com até 8 fotos + vídeo do YouTube</li>
+  <li>🔍 <strong>Filtros avançados</strong> por marca, tipo, preço e status</li>
+  <li>⚖️ <strong>Comparador de veículos</strong> (até 3 lado a lado)</li>
+  <li>🔒 <strong>Reserva online</strong> por 24h com envio automático no WhatsApp</li>
+  <li>✅ <strong>Marcar como vendido</strong> sem excluir do histórico</li>
+  <li>👁 <strong>Contador de visualizações</strong> por veículo no admin</li>
+  <li>📄 <strong>Exportar catálogo em PDF</strong> para imprimir ou enviar</li>
+  <li>📊 <strong>Relatórios</strong>: por marca, tipo, mais vistos, ticket médio</li>
+  <li>🌙 <strong>Modo escuro/claro</strong> para visitantes</li>
+  <li>📱 <strong>100% responsivo</strong> para celular</li>
+  <li>🔐 <strong>Senha do admin personalizável</strong></li>
+  <li>🔎 <strong>SEO otimizado</strong> para Google</li>
+</ul>
+
+<hr class="divider">
+
+<h2><span class="num">❓</span> Dúvidas Frequentes</h2>
+
+<div class="box">
+  <strong>O Firebase é realmente gratuito?</strong><br>
+  Sim! O plano Spark cobre: 50.000 leituras/dia, 20.000 escritas/dia, 5GB de fotos. Para uma revenda de carros com algumas centenas de veículos, isso é mais do que suficiente.
+</div>
+<div class="box" style="margin-top:1rem">
+  <strong>E se eu precisar de mais capacidade?</strong><br>
+  O plano pago do Firebase (Blaze) custa apenas pelo que usar, com preços muito baixos. Uma revenda típica gastaria menos de R$ 10/mês mesmo no plano pago.
+</div>
+<div class="box" style="margin-top:1rem">
+  <strong>Como faço backup dos dados?</strong><br>
+  No Firebase Console → Firestore → clique nos 3 pontos → "Exportar dados". Isso baixa todos os seus veículos.
+</div>
+<div class="box" style="margin-top:1rem">
+  <strong>Posso usar no celular para cadastrar carros?</strong><br>
+  Sim! O painel admin funciona em celular. Acesse <code>seusite.vercel.app/admin.html</code> pelo navegador do celular.
+</div>
+
+<hr class="divider">
+
+<p style="text-align:center;color:var(--silver);font-size:14px">Site desenvolvido para Maradona's Car · Belo Horizonte, MG</p>
+
+</body>
+</html>

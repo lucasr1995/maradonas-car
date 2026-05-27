@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Veículo – Maradona's Car</title>
+<meta name="description" id="pageDesc" content="Confira este veículo na Maradona's Car.">
+<meta property="og:title" id="ogTitle" content="Veículo – Maradona's Car">
+<meta property="og:description" id="ogDesc" content="Multimarcas em BH">
+<meta property="og:image" id="ogImage" content="logo.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#D0401A;--red2:#e8521f;--bg:#0f0f0f;--bg2:#161616;--bg3:#1f1f1f;--silver:#a0a0a0;--white:#fff;--border:rgba(255,255,255,0.08)}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
+body.light{--bg:#f5f5f0;--bg2:#eaeae5;--bg3:#e0e0db;--silver:#555;--white:#111;--border:rgba(0,0,0,0.1)}
+nav{position:fixed;top:0;width:100%;z-index:200;background:rgba(15,15,15,0.97);border-bottom:1px solid rgba(208,64,26,0.3);backdrop-filter:blur(12px)}
+body.light nav{background:rgba(245,245,240,0.97)}
+.nav-inner{max-width:1300px;margin:0 auto;padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:46px;object-fit:contain}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--red2)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.theme-btn{background:none;border:1px solid var(--border);color:var(--silver);padding:8px 10px;cursor:pointer;font-size:16px;line-height:1}
+.nav-cta{background:var(--red);color:#fff;padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block}
+.nav-cta:hover{background:var(--red2)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white)}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--bg2);z-index:199;padding:2rem;border-bottom:1px solid var(--border)}
+.mobile-menu.open{display:flex;flex-direction:column;gap:1.5rem}
+.mobile-menu a{font-size:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--silver);text-decoration:none}
+.breadcrumb{max-width:1300px;margin:0 auto;padding:90px 2rem 0;display:flex;align-items:center;gap:.5rem;font-size:12px;color:var(--silver)}
+.breadcrumb a{color:var(--silver);text-decoration:none}
+.breadcrumb a:hover{color:var(--red2)}
+.breadcrumb span{color:rgba(255,255,255,.3)}
+/* GALERIA */
+.galeria{max-width:1300px;margin:1.5rem auto 0;padding:0 2rem}
+.galeria-main{display:grid;grid-template-columns:1fr 220px;gap:1.5px}
+.foto-principal{background:var(--bg3);aspect-ratio:16/10;overflow:hidden;position:relative;cursor:zoom-in}
+.foto-principal img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.foto-principal:hover img{transform:scale(1.03)}
+.foto-badge{position:absolute;top:16px;left:16px;background:var(--red);color:#fff;padding:5px 12px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.foto-badge.reservado{background:#d97706}
+.foto-badge.vendido{background:#374151}
+.miniaturas{display:grid;grid-template-rows:repeat(4,1fr);gap:1.5px}
+.miniatura{background:var(--bg3);overflow:hidden;cursor:pointer;position:relative}
+.miniatura img{width:100%;height:100%;object-fit:cover;transition:opacity .2s}
+.miniatura:hover img{opacity:.75}
+.miniatura.active::after{content:'';position:absolute;inset:0;border:2px solid var(--red2)}
+.miniatura-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--silver)}
+/* VÍDEO */
+.video-section{max-width:1300px;margin:1.5px auto 0;padding:0 2rem}
+.video-wrap{width:100%;aspect-ratio:16/6;background:var(--bg3)}
+.video-wrap iframe{width:100%;height:100%;border:none}
+/* CONTEÚDO */
+.car-content{max-width:1300px;margin:2rem auto 0;padding:0 2rem 5rem;display:grid;grid-template-columns:1fr 380px;gap:3rem;align-items:start}
+.car-eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red2);margin-bottom:.5rem}
+.car-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,6vw,64px);font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-1px;margin-bottom:1.5rem}
+.ficha{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-bottom:2rem}
+.ficha-item{background:var(--bg3);padding:1.25rem}
+.ficha-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:6px}
+.ficha-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900}
+.desc-box{background:var(--bg2);padding:2rem;border:1px solid var(--border);margin-bottom:2rem}
+.desc-box h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:1rem;letter-spacing:1px}
+.desc-box p{font-size:15px;font-weight:300;color:var(--silver);line-height:1.9}
+/* SIDEBAR */
+.price-box{background:var(--bg3);padding:2rem;border:1px solid var(--border);margin-bottom:1.5px}
+.price-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:.5rem}
+.price-big{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;line-height:1;margin-bottom:.5rem}
+.price-big small{font-size:22px;font-weight:400;color:var(--silver)}
+.price-parc{font-size:13px;color:var(--silver)}
+.price-parc span{color:var(--red2);font-weight:600}
+.views-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid var(--border);padding:5px 10px;font-size:12px;color:var(--silver);margin-top:.75rem}
+.btn-wpp{display:block;background:#25D366;color:#fff;text-align:center;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;margin-bottom:1.5px;transition:background .2s}
+.btn-wpp:hover{background:#1ebe5a}
+.btn-reservar-cta{display:block;background:var(--yellow,#d97706);color:#fff;text-align:center;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;margin-bottom:1.5px;cursor:pointer;border:none;width:100%;transition:opacity .2s}
+.btn-reservar-cta:hover{opacity:.85}
+.btn-fin{display:block;background:var(--red);color:#fff;text-align:center;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;margin-bottom:1.5px;transition:background .2s}
+.btn-fin:hover{background:var(--red2)}
+.btn-back{display:block;background:transparent;color:var(--silver);text-align:center;padding:13px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--border);text-decoration:none;transition:all .2s}
+.btn-back:hover{border-color:var(--white);color:var(--white)}
+.garantias{background:var(--bg2);padding:1.5rem;border:1px solid var(--border);margin-top:1.5px}
+.garantias h4{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
+.garantia-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--silver);padding:.5rem 0;border-bottom:1px solid var(--border)}
+.garantia-item:last-child{border:none}
+.reserva-info{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.3);padding:1rem;font-size:13px;color:#fbbf24;line-height:1.5;margin-bottom:1.5px}
+/* MAIS VEÍCULOS */
+.mais-section{background:var(--bg2);padding:4rem 2rem}
+.mais-inner{max-width:1300px;margin:0 auto}
+.mais-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5px;margin-top:2rem}
+.mini-card{background:var(--bg3);overflow:hidden;cursor:pointer;transition:transform .2s}
+.mini-card:hover{transform:translateY(-4px)}
+.mini-img{height:160px;background:var(--bg);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:56px}
+.mini-img img{width:100%;height:100%;object-fit:cover}
+.mini-body{padding:1rem}
+.mini-brand{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red2);margin-bottom:3px}
+.mini-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;margin-bottom:.5rem}
+.mini-price{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900}
+.mini-price small{font-size:12px;color:var(--silver)}
+/* MODAL FOTO */
+.modal-foto{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:999;display:none;align-items:center;justify-content:center;padding:2rem}
+.modal-foto.open{display:flex}
+.modal-foto img{max-width:90vw;max-height:88vh;object-fit:contain}
+.modal-close{position:absolute;top:1.5rem;right:1.5rem;background:var(--red);color:#fff;border:none;width:40px;height:40px;font-size:20px;cursor:pointer}
+.modal-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:none;color:#fff;font-size:28px;padding:1rem .75rem;cursor:pointer;transition:background .2s}
+.modal-nav:hover{background:rgba(208,64,26,.6)}
+.modal-nav.prev{left:1rem}
+.modal-nav.next{right:1rem}
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg3);border:1px solid rgba(208,64,26,.4);border-left:4px solid var(--red);padding:1rem 1.5rem;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-left-color:#22c55e}
+.toast p{font-size:14px;font-weight:500}
+footer{background:#0a0a0a;padding:3rem 2rem;border-top:1px solid rgba(208,64,26,.25)}
+.foot-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.foot-logo img{height:40px;object-fit:contain}
+.foot-links{display:flex;gap:2rem;flex-wrap:wrap}
+.foot-links a{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--red2)}
+.foot-bottom{max-width:1300px;margin:1.5rem auto 0;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:12px;color:rgba(160,160,160,.5);flex-wrap:wrap;gap:.5rem}
+@media(max-width:1000px){.galeria-main{grid-template-columns:1fr}.miniaturas{grid-template-rows:none;grid-template-columns:repeat(5,1fr)}.car-content{grid-template-columns:1fr}.ficha{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.nav-links,.nav-cta{display:none}.hamburger{display:flex}.ficha{grid-template-columns:1fr 1fr}.miniaturas{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Maradona's Car"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="estoque.html">Estoque</a></li>
+      <li><a href="financiamento.html">Financiamento</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+      <a href="contato.html" class="nav-cta">Fale Conosco</a>
+      <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+  <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+</div>
+
+<div id="carroContent"></div>
+
+<div class="mais-section" id="maisSection" style="display:none">
+  <div class="mais-inner">
+    <div style="display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red2);margin-bottom:.75rem"><span style="width:24px;height:2px;background:var(--red2);display:block"></span>Outros Veículos</div>
+    <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(30px,4vw,48px);font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-0.5px">Você também<br>pode gostar</h2>
+    <div class="mais-grid" id="maisGrid"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-logo"><img src="logo.jpg" alt="Maradona's Car"></div>
+    <div class="foot-links">
+      <a href="index.html">Início</a><a href="estoque.html">Estoque</a>
+      <a href="financiamento.html">Financiamento</a><a href="contato.html">Contato</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2025 Maradona's Car. Todos os direitos reservados.</span>
+    <span>CNPJ: 00.000.000/0001-00 · DETRAN-MG 00000</span>
+  </div>
+</footer>
+
+<!-- MODAL FOTO -->
+<div class="modal-foto" id="modalFoto" onclick="fecharModal(event)">
+  <button class="modal-close" onclick="fecharModalBtn()">✕</button>
+  <button class="modal-nav prev" onclick="navFoto(-1,event)">‹</button>
+  <img id="modalImg" src="" alt="Foto">
+  <button class="modal-nav next" onclick="navFoto(1,event)">›</button>
+</div>
+
+<div class="toast" id="toast"><p id="toastMsg"></p></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="db.js"></script>
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+function toggleTheme(){const l=document.body.classList.toggle('light');localStorage.setItem('mc_theme',l?'light':'dark');document.getElementById('themeBtn').textContent=l?'☀️':'🌙'}
+if(localStorage.getItem('mc_theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️'}
+function showToast(msg,type=''){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.className='toast'+(type?' '+type:'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500)}
+
+// MODAL FOTO com navegação
+let fotosList=[];let fotoIdx=0;
+function abrirModal(fotos,idx){fotosList=fotos;fotoIdx=idx;document.getElementById('modalImg').src=fotos[idx];document.getElementById('modalFoto').classList.add('open')}
+function fecharModal(e){if(e.target===document.getElementById('modalFoto'))document.getElementById('modalFoto').classList.remove('open')}
+function fecharModalBtn(){document.getElementById('modalFoto').classList.remove('open')}
+function navFoto(dir,e){e.stopPropagation();fotoIdx=(fotoIdx+dir+fotosList.length)%fotosList.length;document.getElementById('modalImg').src=fotosList[fotoIdx]}
+
+function getFotos(c){if(c.fotos&&c.fotos.length)return c.fotos;if(c.foto)return[c.foto];return[]}
+
+function trocarFoto(src,idx,el){
+  const fp=document.getElementById('fotoPrincipalImg');
+  if(fp)fp.src=src;
+  fotoIdx=idx;
+  document.querySelectorAll('.miniatura').forEach(m=>m.classList.remove('active'));
+  if(el)el.classList.add('active');
+}
+
+function getYoutubeId(url){if(!url)return null;const m=url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);return m?m[1]:null}
+
+async function reservarOnline(id,nome,preco){
+  const nome_cliente=prompt(`Reservar o ${nome}?\n\nDigite seu nome para confirmar a reserva de 24h:`);
+  if(!nome_cliente)return;
+  try{
+    await dbReservarCarro(id,true,nome_cliente);
+    const zap=`https://wa.me/5531999995555?text=Olá! Fiz a reserva online do ${nome} (R$ ${Number(preco).toLocaleString('pt-BR')}). Meu nome é ${nome_cliente}. Aguardo o contato!`;
+    showToast('Reserva confirmada! Abrindo WhatsApp...','success');
+    setTimeout(()=>window.open(zap,'_blank'),1500);
+    location.reload();
+  }catch(e){showToast('Erro ao reservar. Tente via WhatsApp.')}
+}
+
+window.addEventListener('load', async ()=>{
+  const params=new URLSearchParams(location.search);
+  const id=params.get('id');
+  const carros=await dbGetCarros();
+  const carro=carros.find(c=>c.id===id);
+  const content=document.getElementById('carroContent');
+
+  if(!carro){
+    content.innerHTML=`<div style="text-align:center;padding:8rem 2rem;color:var(--silver)"><h2 style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;margin-bottom:1rem">Veículo Não Encontrado</h2><p>Este veículo pode ter sido vendido ou removido.</p><br><a href="estoque.html" style="color:var(--red2);font-weight:700;text-decoration:none">← Ver Estoque Completo</a></div>`;
+    return;
+  }
+
+  // Incrementar visualizações
+  dbIncrementViews(id);
+
+  // SEO dinâmico
+  const titulo=`${carro.marca} ${carro.modelo} ${carro.ano} – Maradona's Car`;
+  document.getElementById('pageTitle').textContent=titulo;
+  document.getElementById('pageDesc').content=`${carro.marca} ${carro.modelo} ${carro.ano} por R$ ${Number(carro.preco).toLocaleString('pt-BR')}${carro.km?' · '+Number(carro.km).toLocaleString('pt-BR')+' km':''} na Maradona's Car, Belo Horizonte.`;
+  document.getElementById('ogTitle').content=titulo;
+  document.getElementById('ogDesc').content=`R$ ${Number(carro.preco).toLocaleString('pt-BR')} · ${carro.ano}${carro.km?' · '+Number(carro.km).toLocaleString('pt-BR')+' km':''}`;
+  const fotos=getFotos(carro);
+  if(fotos[0])document.getElementById('ogImage').content=fotos[0];
+
+  const zap=`https://wa.me/5531999995555?text=Olá! Tenho interesse no ${carro.marca} ${carro.modelo} ${carro.ano} – R$ ${Number(carro.preco).toLocaleString('pt-BR')}. Vi no site!`;
+  const parcela=Math.round(Number(carro.preco)*0.0149*(Math.pow(1.0149,60))/(Math.pow(1.0149,60)-1));
+  const vid=getYoutubeId(carro.video||'');
+
+  // Badge status
+  const badgeTxt=carro.vendido?'Vendido':carro.reservado?`Reservado · ${carro.reservadoPor||''}`:carro.destaque?'Destaque':'';
+  const badgeCls=carro.vendido?'vendido':carro.reservado?'reservado':'';
+
+  // Galeria
+  const fotosPrincipal=fotos[0]
+    ?`<img id="fotoPrincipalImg" src="${fotos[0]}" alt="${carro.marca} ${carro.modelo}" loading="eager">`
+    :`<div style="font-size:120px;display:flex;align-items:center;justify-content:center;height:100%">🚗</div>`;
+
+  const minisHtml=fotos.length>1
+    ?`<div class="miniaturas">${fotos.map((f,i)=>`<div class="miniatura${i===0?' active':''}" onclick="trocarFoto('${f}',${i},this)"><img src="${f}" alt="Foto ${i+1}" loading="lazy"></div>`).join('')}</div>`
+    :'';
+
+  const fichaItems=[
+    {l:'Ano',v:carro.ano},{l:'Km',v:carro.km?Number(carro.km).toLocaleString('pt-BR')+' km':'–'},
+    {l:'Motor',v:carro.motor||'–'},{l:'Câmbio',v:carro.cambio||'–'},
+    {l:'Tipo',v:carro.tipo||'–'},{l:'Cor',v:carro.cor||'–'},
+  ].filter(i=>i.v&&i.v!=='–').map(i=>`<div class="ficha-item"><div class="ficha-label">${i.l}</div><div class="ficha-val">${i.v}</div></div>`).join('');
+
+  const reservaInfoHtml=carro.reservado&&!carro.vendido
+    ?`<div class="reserva-info">🔒 Este veículo está reservado. Entre em contato para verificar disponibilidade.</div>`:''
+
+  content.innerHTML=`
+  <div class="breadcrumb">
+    <a href="index.html">Início</a><span>/</span>
+    <a href="estoque.html">Estoque</a><span>/</span>
+    <span style="color:var(--white)">${carro.marca} ${carro.modelo}</span>
+  </div>
+  <div class="galeria" style="margin-top:1.5rem">
+    <div class="galeria-main">
+      <div class="foto-principal" onclick="abrirModal(${JSON.stringify(fotos)},fotoIdx)">
+        ${badgeTxt?`<div class="foto-badge${badgeCls?' '+badgeCls:''}">${badgeTxt}</div>`:''}
+        ${fotosPrincipal}
+      </div>
+      ${minisHtml}
+    </div>
+  </div>
+  ${vid?`<div class="video-section"><div class="video-wrap"><iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen loading="lazy"></iframe></div></div>`:''}
+  <div class="car-content">
+    <div>
+      <div class="car-eyebrow">${carro.marca}</div>
+      <div class="car-title">${carro.modelo}<br><span style="color:var(--red2)">${carro.ano}</span></div>
+      <div class="ficha">${fichaItems}</div>
+      ${carro.descricao?`<div class="desc-box"><h3>Sobre este veículo</h3><p>${carro.descricao}</p></div>`:''}
+    </div>
+    <div>
+      ${reservaInfoHtml}
+      <div class="price-box">
+        <div class="price-label">Preço</div>
+        <div class="price-big"><small>R$</small> ${Number(carro.preco).toLocaleString('pt-BR')}</div>
+        <div class="price-parc">ou em até <span>60x de R$ ${parcela.toLocaleString('pt-BR')}</span>*</div>
+        ${carro.views?`<div class="views-badge">👁 ${carro.views} pessoa${carro.views>1?'s':''} visualizou${carro.views>1?'ram':''} este veículo</div>`:''}
+      </div>
+      ${!carro.vendido?`<a class="btn-wpp" href="${zap}" target="_blank">💬 Chamar no WhatsApp</a>`:''}
+      ${!carro.vendido&&!carro.reservado?`<button class="btn-reservar-cta" onclick="reservarOnline('${carro.id}','${carro.marca} ${carro.modelo}',${carro.preco})" style="--yellow:#d97706">🔒 Reservar por 24h</button>`:''}
+      <a class="btn-fin" href="financiamento.html">💳 Simular Financiamento</a>
+      <a class="btn-back" href="estoque.html">← Voltar ao Estoque</a>
+      <div class="garantias">
+        <h4>Garantias e Diferenciais</h4>
+        <div class="garantia-item"><span>✅</span><span>Garantia de 6 meses</span></div>
+        <div class="garantia-item"><span>📋</span><span>Laudo cautelar incluso</span></div>
+        <div class="garantia-item"><span>📃</span><span>IPVA e licenciamento em dia</span></div>
+        <div class="garantia-item"><span>🔄</span><span>Aceita seu carro na troca</span></div>
+        <div class="garantia-item"><span>💳</span><span>Financiamento facilitado</span></div>
+      </div>
+    </div>
+  </div>`;
+
+  // Mais veículos
+  const outros=carros.filter(c=>c.id!==id&&!c.vendido).slice(0,4);
+  if(outros.length){
+    document.getElementById('maisSection').style.display='block';
+    document.getElementById('maisGrid').innerHTML=outros.map(c=>{
+      const f=getFotos(c);
+      return `<div class="mini-card" onclick="location.href='carro.html?id=${c.id}'">
+        <div class="mini-img">${f[0]?`<img src="${f[0]}" loading="lazy">`:'🚗'}</div>
+        <div class="mini-body"><div class="mini-brand">${c.marca}</div><div class="mini-name">${c.modelo}</div><div class="mini-price"><small>R$</small> ${Number(c.preco).toLocaleString('pt-BR')}</div></div>
+      </div>`;
+    }).join('');
+  }
+});
+</script>
+</body>
+</html>
