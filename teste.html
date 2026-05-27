@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Teste Firebase – Maradona's Car</title>
+<style>
+body{font-family:monospace;background:#0f0f0f;color:#fff;padding:2rem;max-width:800px;margin:0 auto}
+h1{color:#e8521f;margin-bottom:2rem}
+.ok{color:#22c55e}.err{color:#f87171}.info{color:#fbbf24}
+pre{background:#1f1f1f;padding:1rem;margin:.5rem 0;white-space:pre-wrap;word-break:break-all;font-size:13px}
+button{background:#D0401A;color:#fff;border:none;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;margin:.5rem .5rem 0 0}
+button:hover{background:#e8521f}
+#log{margin-top:1.5rem}
+</style>
+</head>
+<body>
+<h1>🔧 Diagnóstico Firebase</h1>
+<div id="status">Aguardando...</div>
+<div>
+  <button onclick="testarConexao()">🔌 Testar Conexão</button>
+  <button onclick="listarCarros()">📦 Listar Carros</button>
+  <button onclick="salvarTeste()">💾 Salvar Carro Teste</button>
+</div>
+<div id="log"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="db.js"></script>
+<script>
+function log(msg, type='info') {
+  const el = document.getElementById('log');
+  const cls = type === 'ok' ? 'ok' : type === 'err' ? 'err' : 'info';
+  el.innerHTML += `<pre class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</pre>`;
+}
+
+async function testarConexao() {
+  log('Testando conexão Firebase...');
+  try {
+    const db = await _init();
+    if (db) {
+      log('✅ Firebase conectado com sucesso!', 'ok');
+      log('Project ID: ' + FIREBASE_CONFIG.projectId, 'ok');
+    } else {
+      log('❌ Firebase não conectou', 'err');
+    }
+  } catch(e) {
+    log('❌ Erro: ' + e.message, 'err');
+  }
+}
+
+async function listarCarros() {
+  log('Buscando carros no Firestore...');
+  try {
+    const carros = await dbGetCarros();
+    if (carros.length === 0) {
+      log('⚠️ Nenhum carro encontrado no banco', 'info');
+    } else {
+      log(`✅ ${carros.length} carro(s) encontrado(s)!`, 'ok');
+      carros.forEach(c => log(`  → ${c.marca} ${c.modelo} ${c.ano} – R$ ${Number(c.preco).toLocaleString('pt-BR')}`, 'ok'));
+    }
+  } catch(e) {
+    log('❌ Erro: ' + e.message, 'err');
+  }
+}
+
+async function salvarTeste() {
+  log('Salvando carro de teste...');
+  try {
+    const carro = await dbSaveCarro({
+      marca: 'Teste', modelo: 'Conexão', ano: '2025',
+      preco: '1', km: '0', destaque: false
+    });
+    log('✅ Carro salvo com ID: ' + carro.id, 'ok');
+    log('Agora clique em "Listar Carros" para confirmar.', 'info');
+  } catch(e) {
+    log('❌ Erro ao salvar: ' + e.message, 'err');
+  }
+}
+
+window.addEventListener('load', async () => {
+  document.getElementById('status').innerHTML = '<span class="info">Iniciando diagnóstico automático...</span>';
+  await testarConexao();
+  await listarCarros();
+});
+</script>
+</body>
+</html>

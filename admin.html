@@ -635,7 +635,7 @@ function showToast(msg,type=''){
   setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-document.addEventListener('DOMContentLoaded', async function() {
+window.addEventListener('load', async function() {
   if(sessionStorage.getItem('mcAdmin')){
     document.getElementById('loginWrap').style.display='none';
     document.getElementById('adminWrap').style.display='flex';

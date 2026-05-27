@@ -1,42 +1,50 @@
 // ============================================================
-//  db.js – Firebase + localStorage fallback
+//  db.js – Firebase com inicialização garantida
 // ============================================================
 
-let db = null;
-let firebaseReady = false;
+let _db = null;
+let _initPromise = null;
 
-// Retorna Promise que resolve quando Firebase estiver pronto
-function waitFirebase() {
-  return new Promise((resolve) => {
-    if (firebaseReady) { resolve(true); return; }
-    try {
-      if (typeof firebase === 'undefined') { resolve(false); return; }
-      if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
-      db = firebase.firestore();
-      firebaseReady = true;
-      resolve(true);
-    } catch(e) {
-      console.error('Firebase erro:', e);
-      resolve(false);
+function _init() {
+  if (_initPromise) return _initPromise;
+  _initPromise = new Promise((resolve) => {
+    function tryInit() {
+      try {
+        if (typeof firebase === 'undefined' || typeof FIREBASE_CONFIG === 'undefined') {
+          setTimeout(tryInit, 100);
+          return;
+        }
+        if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+        _db = firebase.firestore();
+        console.log('✅ Firebase pronto');
+        resolve(_db);
+      } catch(e) {
+        console.error('Firebase erro:', e);
+        resolve(null);
+      }
     }
+    tryInit();
   });
+  return _initPromise;
 }
 
 async function dbGetCarros() {
-  const ok = await waitFirebase();
-  if (!ok) return JSON.parse(localStorage.getItem('maradonas_carros') || '[]');
+  const db = await _init();
+  if (!db) return JSON.parse(localStorage.getItem('maradonas_carros') || '[]');
   try {
     const snap = await db.collection('carros').orderBy('createdAt', 'desc').get();
-    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const carros = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    console.log('📦 Carros carregados:', carros.length);
+    return carros;
   } catch(e) {
-    console.error('Erro ao buscar:', e);
+    console.error('Erro buscar carros:', e);
     return [];
   }
 }
 
 async function dbSaveCarro(carro) {
-  const ok = await waitFirebase();
-  if (!ok) {
+  const db = await _init();
+  if (!db) {
     const list = JSON.parse(localStorage.getItem('maradonas_carros') || '[]');
     if (carro.id) {
       const idx = list.findIndex(c => c.id === carro.id);
@@ -48,39 +56,30 @@ async function dbSaveCarro(carro) {
     localStorage.setItem('maradonas_carros', JSON.stringify(list));
     return carro;
   }
-  try {
-    const data = { ...carro };
-    const id = data.id || null;
-    delete data.id;
-    if (id) {
-      data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-      await db.collection('carros').doc(id).set(data, { merge: true });
-      return { id, ...data };
-    } else {
-      data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-      data.views = 0;
-      const ref = await db.collection('carros').add(data);
-      return { id: ref.id, ...data };
-    }
-  } catch(e) {
-    console.error('Erro ao salvar:', e);
-    throw e;
+  const data = { ...carro };
+  const id = data.id || null;
+  delete data.id;
+  if (id) {
+    data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+    await db.collection('carros').doc(id).set(data, { merge: true });
+    return { id, ...data };
+  } else {
+    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    data.views = 0;
+    const ref = await db.collection('carros').add(data);
+    return { id: ref.id, ...data };
   }
 }
 
 async function dbDeleteCarro(id) {
-  const ok = await waitFirebase();
-  if (!ok) {
-    const list = JSON.parse(localStorage.getItem('maradonas_carros') || '[]').filter(c => c.id !== id);
-    localStorage.setItem('maradonas_carros', JSON.stringify(list));
-    return;
-  }
+  const db = await _init();
+  if (!db) return;
   await db.collection('carros').doc(id).delete();
 }
 
 async function dbMarcarVendido(id, vendido) {
-  const ok = await waitFirebase();
-  if (!ok) return;
+  const db = await _init();
+  if (!db) return;
   await db.collection('carros').doc(id).update({
     vendido,
     dataVenda: vendido ? new Date().toLocaleDateString('pt-BR') : null
@@ -88,8 +87,8 @@ async function dbMarcarVendido(id, vendido) {
 }
 
 async function dbIncrementViews(id) {
-  const ok = await waitFirebase();
-  if (!ok) return;
+  const db = await _init();
+  if (!db) return;
   try {
     await db.collection('carros').doc(id).update({
       views: firebase.firestore.FieldValue.increment(1)
@@ -98,8 +97,8 @@ async function dbIncrementViews(id) {
 }
 
 async function dbReservarCarro(id, reservado, nomeCliente) {
-  const ok = await waitFirebase();
-  if (!ok) return;
+  const db = await _init();
+  if (!db) return;
   await db.collection('carros').doc(id).update({
     reservado,
     reservadoPor: nomeCliente || null,

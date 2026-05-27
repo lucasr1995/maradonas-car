@@ -392,7 +392,8 @@ async function loadDestaques(){
     </div>`;
   }).join('');
 }
-document.addEventListener('DOMContentLoaded', loadDestaques);
+// auto-load on page ready
+window.addEventListener('load', loadDestaques);
 </script>
 </body>
 </html>
