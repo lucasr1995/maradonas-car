@@ -635,14 +635,15 @@ function showToast(msg,type=''){
   setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-window.addEventListener('load', async function() {
+(async function() {
+  await new Promise(r => setTimeout(r, 300));
   if(sessionStorage.getItem('mcAdmin')){
     document.getElementById('loginWrap').style.display='none';
     document.getElementById('adminWrap').style.display='flex';
     document.getElementById('adminUser').textContent='👤 '+sessionStorage.getItem('mcAdmin');
     await carregarTudo();
   }
-});
+})();
 </script>
 </body>
 </html>

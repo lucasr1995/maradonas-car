@@ -393,7 +393,11 @@ async function loadDestaques(){
   }).join('');
 }
 // auto-load on page ready
-window.addEventListener('load', loadDestaques);
+(async function() {
+  // Aguarda página + Firebase carregarem completamente
+  await new Promise(r => setTimeout(r, 300));
+  loadDestaques();
+})();
 </script>
 </body>
 </html>

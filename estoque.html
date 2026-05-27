@@ -305,7 +305,10 @@ function abrirComparador(){
 }
 function fecharComparador(){document.getElementById('modalCompare').classList.remove('open')}
 
-window.addEventListener('load', init);
+(async function() {
+  await new Promise(r => setTimeout(r, 300));
+  init();
+})();
 </script>
 </body>
 </html>
