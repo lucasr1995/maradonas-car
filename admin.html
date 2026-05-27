@@ -326,11 +326,7 @@ function doLogin(){
   } else {document.getElementById('loginErr').style.display='block'}
 }
 function sair(){sessionStorage.removeItem('mcAdmin');location.reload()}
-if(sessionStorage.getItem('mcAdmin')){
-  document.getElementById('loginWrap').style.display='none';
-  document.getElementById('adminWrap').style.display='flex';
-  document.getElementById('adminUser').textContent='👤 '+sessionStorage.getItem('mcAdmin');
-}
+// login check handled in iniciarAdmin()
 
 // TABS
 function setTab(id,btn){
@@ -639,7 +635,18 @@ function showToast(msg,type=''){
   setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-if(sessionStorage.getItem('mcAdmin')){carregarTudo()}
+// Garante que Firebase inicializa antes de carregar dados
+function iniciarAdmin() {
+  initFirebase();
+  if(sessionStorage.getItem('mcAdmin')){
+    document.getElementById('loginWrap').style.display='none';
+    document.getElementById('adminWrap').style.display='flex';
+    document.getElementById('adminUser').textContent='👤 '+sessionStorage.getItem('mcAdmin');
+    // Aguarda Firebase estar pronto
+    setTimeout(carregarTudo, 800);
+  }
+}
+iniciarAdmin();
 </script>
 </body>
 </html>

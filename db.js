@@ -1,33 +1,42 @@
 // ============================================================
-//  db.js – Camada de dados (Firebase Firestore)
-//  Toda comunicação com o banco passa por este arquivo
+//  db.js – Camada de dados Firebase + localStorage fallback
 // ============================================================
 
-// Inicializa Firebase
 let db = null;
-let storage = null;
 let firebaseReady = false;
 
 function initFirebase() {
-  if (typeof firebase === 'undefined') {
-    console.warn('Firebase SDK not loaded – usando localStorage fallback');
+  try {
+    if (typeof firebase === 'undefined') {
+      console.warn('Firebase SDK não carregado – usando localStorage');
+      return false;
+    }
+    if (!firebase.apps.length) {
+      firebase.initializeApp(FIREBASE_CONFIG);
+    }
+    db = firebase.firestore();
+    firebaseReady = true;
+    console.log('Firebase conectado!');
+    return true;
+  } catch(e) {
+    console.error('Erro Firebase:', e);
     return false;
   }
-  if (!firebase.apps.length) {
-    firebase.initializeApp(FIREBASE_CONFIG);
-  }
-  db = firebase.firestore();
-  storage = firebase.storage();
-  firebaseReady = true;
-  return true;
 }
 
 // ── VEÍCULOS ──────────────────────────────────────────────
 
 async function dbGetCarros() {
-  if (!firebaseReady) return JSON.parse(localStorage.getItem('maradonas_carros') || '[]');
-  const snap = await db.collection('carros').orderBy('createdAt', 'desc').get();
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  if (!firebaseReady) {
+    return JSON.parse(localStorage.getItem('maradonas_carros') || '[]');
+  }
+  try {
+    const snap = await db.collection('carros').orderBy('createdAt', 'desc').get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch(e) {
+    console.error('Erro ao buscar carros:', e);
+    return JSON.parse(localStorage.getItem('maradonas_carros') || '[]');
+  }
 }
 
 async function dbSaveCarro(carro) {
@@ -43,17 +52,24 @@ async function dbSaveCarro(carro) {
     localStorage.setItem('maradonas_carros', JSON.stringify(list));
     return carro;
   }
-  const data = { ...carro };
-  if (data.id) {
-    const id = data.id; delete data.id;
-    data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-    await db.collection('carros').doc(id).set(data, { merge: true });
-    return { id, ...data };
-  } else {
-    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-    data.views = 0;
-    const ref = await db.collection('carros').add(data);
-    return { id: ref.id, ...data };
+  try {
+    const data = { ...carro };
+    const id = data.id || null;
+    delete data.id;
+
+    if (id) {
+      data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+      await db.collection('carros').doc(id).set(data, { merge: true });
+      return { id, ...data };
+    } else {
+      data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+      data.views = 0;
+      const ref = await db.collection('carros').add(data);
+      return { id: ref.id, ...data };
+    }
+  } catch(e) {
+    console.error('Erro ao salvar carro:', e);
+    throw e;
   }
 }
 
@@ -70,13 +86,16 @@ async function dbMarcarVendido(id, vendido) {
   if (!firebaseReady) {
     const list = JSON.parse(localStorage.getItem('maradonas_carros') || '[]');
     const idx = list.findIndex(c => c.id === id);
-    if (idx >= 0) { list[idx].vendido = vendido; list[idx].dataVenda = vendido ? new Date().toISOString() : null; }
+    if (idx >= 0) {
+      list[idx].vendido = vendido;
+      list[idx].dataVenda = vendido ? new Date().toLocaleDateString('pt-BR') : null;
+    }
     localStorage.setItem('maradonas_carros', JSON.stringify(list));
     return;
   }
   await db.collection('carros').doc(id).update({
     vendido,
-    dataVenda: vendido ? firebase.firestore.FieldValue.serverTimestamp() : null
+    dataVenda: vendido ? new Date().toLocaleDateString('pt-BR') : null
   });
 }
 
@@ -93,7 +112,10 @@ async function dbReservarCarro(id, reservado, nomeCliente) {
   if (!firebaseReady) {
     const list = JSON.parse(localStorage.getItem('maradonas_carros') || '[]');
     const idx = list.findIndex(c => c.id === id);
-    if (idx >= 0) { list[idx].reservado = reservado; list[idx].reservadoPor = nomeCliente; }
+    if (idx >= 0) {
+      list[idx].reservado = reservado;
+      list[idx].reservadoPor = nomeCliente || null;
+    }
     localStorage.setItem('maradonas_carros', JSON.stringify(list));
     return;
   }
@@ -104,20 +126,5 @@ async function dbReservarCarro(id, reservado, nomeCliente) {
   });
 }
 
-// ── UPLOAD DE IMAGEM (Firebase Storage) ───────────────────
-
-async function uploadImagem(base64, carroId, index) {
-  if (!firebaseReady || !storage) return base64; // fallback: mantém base64
-  try {
-    const blob = await fetch(base64).then(r => r.blob());
-    const ref = storage.ref(`carros/${carroId}/foto_${index}_${Date.now()}`);
-    await ref.put(blob);
-    return await ref.getDownloadURL();
-  } catch(e) {
-    console.warn('Upload falhou, usando base64:', e);
-    return base64;
-  }
-}
-
-// Inicializa ao carregar
+// Inicializa ao carregar a página
 document.addEventListener('DOMContentLoaded', initFirebase);
